@@ -480,7 +480,7 @@
         </ifl:property>
         <ifl:property>
           <key>authenticationMethod</key>
-          <value>Client Certificate</value>
+          <value>Basic</value>
         </ifl:property>
         <ifl:property>
           <key>credentialName</key>
@@ -1044,7 +1044,7 @@
         </ifl:property>
         <ifl:property>
           <key>authenticationMethod</key>
-          <value>Client Certificate</value>
+          <value>Basic</value>
         </ifl:property>
         <ifl:property>
           <key>credentialName</key>
