@@ -42,10 +42,10 @@ public class JobData {
 } 
 
  class UpsertXML{
-    String jobXML;
-    String compXML;
-    String payRecurBasicXML;
-    String payRecurPremXML;
+    String jobXML="";
+    String compXML="";
+    String payRecurBasicXML="";
+    String payRecurPremXML="";
 }
 
 class NotifyItem {
@@ -137,7 +137,7 @@ def Message processData(Message message) {
 	 
 
 	
-	messageLog.addAttachmentAsString("TEST TEST TEST ", Arrays.asList(pernrs).toString()+"\n\nUserID:\n"+userList, "text/xml");
+	//messageLog.addAttachmentAsString("TEST TEST TEST ", Arrays.asList(pernrs).toString(), "text/xml");
 	
 	HashMap<String, UpsertXML> XMLMap = new HashMap<String, UpsertXML>();
 	List<NotifyItem> notifyList = new ArrayList<NotifyItem>();
@@ -147,7 +147,15 @@ def Message processData(Message message) {
 		for( item in abhList){
 			if(Arrays.asList(pernrs).contains(item.personIdExternal)){
 				eeCount++;
-				 UpsertXML uxml = new UpsertXML();
+				UpsertXML uxml;
+				if(XMLMap.containsKey(item.personIdExternal)){
+				    uxml = XMLMap.get(item.personIdExternal);
+				    
+				}else{
+				    uxml = new UpsertXML(); 
+				}
+
+ 
 				 // job upsert XML
 				 JobData eeJob = jobMap.get(item.personIdExternal);
 				 payload=""
@@ -164,7 +172,8 @@ def Message processData(Message message) {
 				 payload += "<customString22>"+eeJob.custom_string22+"</customString22>";
 				// payload += "<endDate>"+item.endDate+"</endDate>";
 			     payload += "</EmpJob>";    
-			     uxml.jobXML = payload;
+			     uxml.jobXML = uxml.jobXML + payload;
+			     
 			     
 			     //paycomp xml
 			     //userId,startDate,eventReason,endDate
@@ -175,8 +184,8 @@ def Message processData(Message message) {
 			     payload += "<eventReason>"+item.eventReason+"</eventReason>";
 			   //  payload += "<endDate>"+item.endDate+"T23:59:59.000"+"</endDate>";
 			     payload += "</EmpCompensation>";  
-			     uxml.compXML = payload;
-			     
+			     uxml.compXML += payload;
+			     messageLog.addAttachmentAsString("xml", uxml.compXML, "text/xml");
 			     //pay recurring basic pay xml
 			     //userId,startDate,seqNumber,paycompvalue,payComponent,endDate
 			     payload="";
@@ -189,8 +198,8 @@ def Message processData(Message message) {
 			     payload += "<payComponent>1005</payComponent>";
 			   //  payload += "<endDate>"+item.endDate+"T23:59:59.000"+"</endDate>";
 			     payload += "</EmpPayCompRecurring>";  
-			     uxml.payRecurBasicXML = payload;
-			     
+			     uxml.payRecurBasicXML += payload;
+			     //messageLog.addAttachmentAsString("xml", uxml.payRecurBasicXML, "text/xml");
 			     //pay recurring premium pay xml
 			     //userId,startDate,seqNumber,paycompvalue,payComponent,endDate
 			     if( Double.valueOf(item.premiumRate)>0) {
@@ -204,7 +213,7 @@ def Message processData(Message message) {
 				 //    payload += "<endDate>"+item.endDate+"T23:59:59.000"+"</endDate>";
 				     payload += "</EmpPayCompRecurring>"; 
 				    
-				         uxml.payRecurPremXML = payload;
+				     uxml.payRecurPremXML += payload;
 				     }
 
 			    
