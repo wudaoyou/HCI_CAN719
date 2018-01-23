@@ -16,7 +16,7 @@ def Message processData(Message message) {
 	
 	for (String key : xmlMap.keySet()) {
 		 item = xmlMap.get(key);
-		 if (item.payRecurPremXML != null){  
+		 if (item.payRecurPremXML.length()>0){  
 		 		eeCount++;
 		        payload += item.payRecurPremXML;
 		          }
@@ -29,6 +29,7 @@ def Message processData(Message message) {
 			messageLog.addAttachmentAsString("07 upsert to premium ", payload, "text/xml");
 		}
 	}
+	
 	message.setProperty("EE_COUNT", eeCount);
 	
 	message.setBody("<EmpPayCompRecurring>" + payload + "</EmpPayCompRecurring>");   

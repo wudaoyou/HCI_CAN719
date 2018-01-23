@@ -185,7 +185,6 @@ def Message processData(Message message) {
 			   //  payload += "<endDate>"+item.endDate+"T23:59:59.000"+"</endDate>";
 			     payload += "</EmpCompensation>";  
 			     uxml.compXML += payload;
-			     messageLog.addAttachmentAsString("xml", uxml.compXML, "text/xml");
 			     //pay recurring basic pay xml
 			     //userId,startDate,seqNumber,paycompvalue,payComponent,endDate
 			     payload="";
