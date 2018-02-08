@@ -372,7 +372,7 @@
         </ifl:property>
         <ifl:property>
           <key>fields</key>
-          <value>userId,startDate,seqNumber,payScaleType,payScaleLevel,payScaleGroup,payScaleArea,eventReason,customString9,customString22</value>
+          <value>userId,startDate,seqNumber,payScaleType,payScaleLevel,payScaleGroup,payScaleArea,eventReason,customString9,customString22,endDate</value>
         </ifl:property>
         <ifl:property>
           <key>receiveTimeOut</key>
@@ -480,7 +480,7 @@
         </ifl:property>
         <ifl:property>
           <key>authenticationMethod</key>
-          <value>Client Certificate</value>
+          <value>Basic</value>
         </ifl:property>
         <ifl:property>
           <key>credentialName</key>
@@ -596,7 +596,7 @@
         </ifl:property>
         <ifl:property>
           <key>fields</key>
-          <value>userId,startDate,eventReason</value>
+          <value>userId,startDate,eventReason,endDate</value>
         </ifl:property>
         <ifl:property>
           <key>queryOptions</key>
@@ -720,7 +720,7 @@
         </ifl:property>
         <ifl:property>
           <key>fields</key>
-          <value>userId,startDate,seqNumber,paycompvalue,payComponent</value>
+          <value>userId,startDate,seqNumber,paycompvalue,payComponent,endDate</value>
         </ifl:property>
         <ifl:property>
           <key>queryOptions</key>
@@ -936,7 +936,7 @@
         </ifl:property>
         <ifl:property>
           <key>fields</key>
-          <value>userId,startDate,seqNumber,paycompvalue,payComponent</value>
+          <value>userId,startDate,seqNumber,paycompvalue,payComponent,endDate</value>
         </ifl:property>
         <ifl:property>
           <key>receiveTimeOut</key>
@@ -1044,7 +1044,7 @@
         </ifl:property>
         <ifl:property>
           <key>authenticationMethod</key>
-          <value>Client Certificate</value>
+          <value>Basic</value>
         </ifl:property>
         <ifl:property>
           <key>credentialName</key>
