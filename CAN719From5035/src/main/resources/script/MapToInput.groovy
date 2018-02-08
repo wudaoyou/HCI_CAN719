@@ -170,7 +170,7 @@ def Message processData(Message message) {
 			     payload += "<seqNumber>"+1+"</seqNumber>";
 				 payload += "<customString9>"+eeJob.custom_string9+"</customString9>";   
 				 payload += "<customString22>"+eeJob.custom_string22+"</customString22>";
-				// payload += "<endDate>"+item.endDate+"</endDate>";
+				 payload += "<endDate>"+item.endDate+"</endDate>";
 			     payload += "</EmpJob>";    
 			     uxml.jobXML = uxml.jobXML + payload;
 			     
@@ -182,7 +182,7 @@ def Message processData(Message message) {
 			     payload += "<userId>"+eeJob.user_id+"</userId>";
 			     payload += "<startDate>"+item.startDate+"T00:00:00.000"+"</startDate>";
 			     payload += "<eventReason>"+item.eventReason+"</eventReason>";
-			   //  payload += "<endDate>"+item.endDate+"T23:59:59.000"+"</endDate>";
+			     payload += "<endDate>"+item.endDate+"</endDate>";
 			     payload += "</EmpCompensation>";  
 			     uxml.compXML += payload;
 			     //pay recurring basic pay xml
@@ -195,7 +195,7 @@ def Message processData(Message message) {
 			     payload += "<seqNumber>" + 1 + "</seqNumber>";
 			     payload += "<paycompvalue>"+ item.hourlyRate +"</paycompvalue>"
 			     payload += "<payComponent>1005</payComponent>";
-			   //  payload += "<endDate>"+item.endDate+"T23:59:59.000"+"</endDate>";
+			     payload += "<endDate>"+item.endDate+"</endDate>";
 			     payload += "</EmpPayCompRecurring>";  
 			     uxml.payRecurBasicXML += payload;
 			     //messageLog.addAttachmentAsString("xml", uxml.payRecurBasicXML, "text/xml");
@@ -209,7 +209,7 @@ def Message processData(Message message) {
 				     payload += "<seqNumber>" + 1 + "</seqNumber>";
 				     payload += "<paycompvalue>"+ item.premiumRate +"</paycompvalue>"
 				     payload += "<payComponent>1010</payComponent>";
-				 //    payload += "<endDate>"+item.endDate+"T23:59:59.000"+"</endDate>";
+				     payload += "<endDate>"+item.endDate+"</endDate>";
 				     payload += "</EmpPayCompRecurring>"; 
 				    
 				     uxml.payRecurPremXML += payload;
