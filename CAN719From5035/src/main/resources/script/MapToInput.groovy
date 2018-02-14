@@ -146,12 +146,15 @@ def Message processData(Message message) {
 	     pernrs = eeList1.split(",");
 	 }
 	 
-	List<String> inputPernrList = new ArrayList<>();
-	inputPernrList.addAll(Arrays.asList(pernrs));
+	List<String> inputPernrList = new ArrayList<>(Arrays.asList(pernrs));
+	List<String> pernrNotInECList = new ArrayList<>(Arrays.asList(pernrs));
+
 	Collections.sort(inputPernrList);
 	messageLog.setStringProperty("pernr from SAP: ", inputPernrList.toString());
-	
 	inputPernrList.retainAll(pernrList);
+	pernrNotInECList.removeAll(pernrList);
+	messageLog.setStringProperty("pernr not in EC: ", pernrNotInECList.toString());
+	
 	
 	HashMap<String, UpsertXML> XMLMap = new HashMap<String, UpsertXML>();
 	List<NotifyItem> notifyList = new ArrayList<NotifyItem>();
