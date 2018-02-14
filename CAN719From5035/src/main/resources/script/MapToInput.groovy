@@ -89,11 +89,17 @@ def Message processData(Message message) {
 
 	String payload = "";
 	String userList="";
-
+	String pernr = "";
+	String uid  = "";
+    List<String> userIdList = new ArrayList<>();
+    List<String> pernrList = new ArrayList<>();
 	
 	compoundEEs.each {  
-		String pernr = it.person.person_id_external;
-	
+		 pernr = it.person.person_id_external;
+		 pernrList.add(pernr);
+		 uid  = it.person.logon_user_id;
+		 userIdList.add(uid);
+		 	 
 		for (def emp in it.person.employment_information) {
 			
 			for (def job in emp.job_information) {
@@ -104,7 +110,7 @@ def Message processData(Message message) {
 				if (end_date.equals("9999-12-31") ) {
 					// job_information found
 					JobData j = new JobData();
-					j.user_id = emp.user_id;
+					j.user_id = uid;
 					j.custom_string9 = job.location;
 					j.custom_string22 = job.custom_string22.isEmpty()? job.location: job.custom_string22;
 					j.start_date = job.start_date;
@@ -115,6 +121,11 @@ def Message processData(Message message) {
 			
 		}// end of employment information loop
 	}// end of compoundEE loop
+	
+	Collections.sort(pernrList);
+	Collections.sort(userIdList);
+	messageLog.setStringProperty("pernrlist valid from EC: ", pernrList.toString());
+	messageLog.setStringProperty("Userlist : ", userIdList.toString());
 	
 	List abhList = pmap.get("ABH_LIST");
 	
@@ -135,9 +146,12 @@ def Message processData(Message message) {
 	     pernrs = eeList1.split(",");
 	 }
 	 
-
+	List<String> inputPernrList = new ArrayList<>();
+	inputPernrList.addAll(Arrays.asList(pernrs));
+	Collections.sort(inputPernrList);
+	messageLog.setStringProperty("pernr from SAP: ", inputPernrList.toString());
 	
-	//messageLog.addAttachmentAsString("TEST TEST TEST ", Arrays.asList(pernrs).toString(), "text/xml");
+	inputPernrList.retainAll(pernrList);
 	
 	HashMap<String, UpsertXML> XMLMap = new HashMap<String, UpsertXML>();
 	List<NotifyItem> notifyList = new ArrayList<NotifyItem>();
@@ -145,7 +159,7 @@ def Message processData(Message message) {
 	int eeCount = 0;
 	
 		for( item in abhList){
-			if(Arrays.asList(pernrs).contains(item.personIdExternal)){
+			if(inputPernrList.contains(item.personIdExternal)){
 				eeCount++;
 				UpsertXML uxml;
 				if(XMLMap.containsKey(item.personIdExternal)){
