@@ -27,12 +27,15 @@
 import com.sap.gateway.ip.core.customdev.util.Message;
 import java.util.*;
 import groovy.xml.*;
+import java.text.SimpleDateFormat;
 
 class UpsertItem {
     String personIdExternal;
 	String userId;
 	String startDate;
+	String startDateMS
 	String endDate;
+	String endDateMS;
 	String eventReason = "PCAUTOB";
 	String payScaleGroup;
 	String payScaleArea;
@@ -61,6 +64,8 @@ def Message processData(Message message) {
 
 	
 	String payload = "";
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    
 	
 	def results = body.'env:Body'.'n0:loadResponse'.Response.LoadEmployee;
 	
@@ -72,9 +77,16 @@ def Message processData(Message message) {
 		//2017-11-04T19:41:17Z
 		String dateStr = it.BeginDate;
 		item.startDate =  dateStr.substring(0,10);
+		Date date = sdf.parse(item.startDate);
+		long millis = date.getTime();
+		item.startDateMS =  "Date(" + millis + ")";
 		dateStr="";
 		dateStr = it.EndDate;
 		item.endDate =  dateStr.substring(0,10);
+		date = sdf.parse(item.endDate);
+		millis = date.getTime();
+		item.endDateMS =  "Date(" + millis + ")";
+		
 		dateStr = it.ChangedOnDate;
 		item.changedOnDate = dateStr;
 		
@@ -88,13 +100,7 @@ def Message processData(Message message) {
 		item.hourlyRate = it.HourlyRate;
 		item.annualRate = it.AnnualRate;
 		item.premiumRate = it.PremiumRate;
-		if(it.PersonnelNumber.equals("5028420")){
-		    messageLog.setStringProperty("PersonnelNumber: ", it.PersonnelNumber.toString());
-		    messageLog.setStringProperty("HourlyRate: ", it.HourlyRate.toString());
-		    messageLog.setStringProperty("AnnualRate: ", it.AnnualRate.toString());
-		    messageLog.setStringProperty("premiumRate: ", it.PremiumRate.toString());
-		}
-
+		
 		
 		upsertItems.add(item);
 	}
