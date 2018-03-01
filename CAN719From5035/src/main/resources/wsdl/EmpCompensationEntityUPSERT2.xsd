@@ -12,7 +12,6 @@
                                         <xs:element minOccurs="0" maxOccurs="unbounded" name="EmpPayCompRecurring">
                                             <xs:complexType>
                                                 <xs:sequence>
-                                                    <xs:element type="xs:double" nillable="true" minOccurs="0" maxOccurs="unbounded" name="paycompvalue" xmlns=""/>
                                                     <xs:element type="xs:dateTime" nillable="false" maxOccurs="unbounded" name="startDate" xmlns=""/>
                                                     <xs:element type="xs:long" nillable="false" maxOccurs="unbounded" name="seqNumber" xmlns=""/>
                                                     <xs:element type="xs:string" nillable="false" maxOccurs="unbounded" name="payComponent" xmlns=""/>
