@@ -83,7 +83,8 @@ def Message processData(Message message) {
 			messageLog.addAttachmentAsString("03 From EC", inXML, "text/xml");
 		}
 	}
-	
+	Map<String,String> sequenceMap = new HashMap<>();
+
 	// beging mapping
 	def compoundEEs = body.CompoundEmployee;
 
@@ -93,6 +94,7 @@ def Message processData(Message message) {
 	String uid  = "";
     List<String> userIdList = new ArrayList<>();
     List<String> pernrList = new ArrayList<>();
+    String key = "";
 	
 	compoundEEs.each {  
 		 pernr = it.person.person_id_external;
@@ -106,6 +108,8 @@ def Message processData(Message message) {
 				String end_date = job.end_date;
 				String seqno = job.seq_number;
 				String empStatus = job.emplStatus;
+				key =pernr+"J"+job.start_date;
+				sequenceMap.put(key,job.seq_number);
 				// check the start date and sequence number to make sure get the correct job_information
 				if (end_date.equals("9999-12-31") ) {
 					// job_information found
@@ -118,6 +122,19 @@ def Message processData(Message message) {
 					jobMap.put(pernr, j);
 				}
 			}// end of emp.job_information loop
+			
+			for (def comp in emp.compensation_information){
+			         key = pernr+"C"+comp.start_date;     
+			         sequenceMap.put(key,comp.seq_number);    
+			         
+			    for(def pay in emp.compensation_information.paycompensation_recurring){
+             		 key = pernr+"P"+pay.pay_component+pay.start_date;         
+			         sequenceMap.put(key,pay.seq_number.toString());
+					 }
+              
+			              
+			 }
+
 			
 		}// end of employment information loop
 	}// end of compoundEE loop
@@ -155,6 +172,7 @@ def Message processData(Message message) {
 	pernrNotInECList.removeAll(pernrList);
 	messageLog.setStringProperty("pernr not in EC: ", pernrNotInECList.toString());
 	
+	messageLog.setStringProperty("sequence map: ", sequenceMap.toString());
 	
 	HashMap<String, UpsertXML> XMLMap = new HashMap<String, UpsertXML>();
 	List<NotifyItem> notifyList = new ArrayList<NotifyItem>();
@@ -175,6 +193,11 @@ def Message processData(Message message) {
  
 				 // job upsert XML
 				 JobData eeJob = jobMap.get(item.personIdExternal);
+				
+				 String jobKey = item.personIdExternal+"J"+item.startDate;
+				 String seqNumber ="";
+				 seqNumber = (sequenceMap.get(jobKey)==null?"1":sequenceMap.get(jobKey)+"");
+
 				 payload=""
 			     payload += "<EmpJob>";  
 			     payload += "<startDate>"+item.startDate+"T00:00:00.000Z"+"</startDate>";
@@ -184,7 +207,7 @@ def Message processData(Message message) {
 			     payload += "<userId>"+eeJob.user_id+"</userId>";
 			     payload += "<payScaleType>"+item.payScaleType+"</payScaleType>";
 			     payload += "<payScaleLevel>"+item.payScaleLevel+"</payScaleLevel>";
-			     payload += "<seqNumber>"+1+"</seqNumber>";
+			     payload += "<seqNumber>"+seqNumber+"</seqNumber>";
 				 payload += "<customString9>"+eeJob.custom_string9+"</customString9>";   
 				 payload += "<customString22>"+eeJob.custom_string22+"</customString22>";
 				 payload += "<endDate>"+item.endDate+"</endDate>";
@@ -206,10 +229,23 @@ def Message processData(Message message) {
 			     //userId,startDate,seqNumber,paycompvalue,payComponent,endDate
 			     payload="";
 			    
+			     String payKey = item.personIdExternal+"P"+"1005"+item.startDate;
+			      seqNumber ="";
+			     if(sequenceMap.get(payKey)==null){
+			         seqNumber = 1;
+			     }else{
+			         seqNumber = Integer.parseInt(sequenceMap.get(payKey))+1+"";
+			         
+			     }
+
+
+				// seqNumber = (sequenceMap.get(payKey)==null?"1":sequenceMap.get(payKey));
+				 
+			     
 			     payload += "<EmpPayCompRecurring>";  
 			     payload += "<userId>"+eeJob.user_id+"</userId>";
 			     payload += "<startDate>"+item.startDate+"T00:00:00.000Z"+"</startDate>";
-			     payload += "<seqNumber>" + 1 + "</seqNumber>";
+			     payload += "<seqNumber>" + seqNumber + "</seqNumber>";
 			     payload += "<paycompvalue>"+ item.hourlyRate +"</paycompvalue>"
 			     payload += "<payComponent>1005</payComponent>";
 			    // payload += "<endDate>"+item.endDateMS+"</endDate>";
@@ -219,11 +255,14 @@ def Message processData(Message message) {
 			     //pay recurring premium pay xml
 			     //userId,startDate,seqNumber,paycompvalue,payComponent,endDate
 			     if( Double.valueOf(item.premiumRate)>0) {
+			          String preKey = item.personIdExternal+"P"+"1010"+item.startDate;
+			     seqNumber ="";
+				 seqNumber = (sequenceMap.get(preKey)==null?"1":sequenceMap.get(preKey));
 			         payload="";
 				     payload += "<EmpPayCompRecurring>";  
 				     payload += "<userId>"+eeJob.user_id+"</userId>";
 				     payload += "<startDate>"+item.startDate+"T00:00:00.000Z"+"</startDate>";
-				     payload += "<seqNumber>" + 1 + "</seqNumber>";
+				     payload += "<seqNumber>" + seqNumber + "</seqNumber>";
 				     payload += "<paycompvalue>"+ item.premiumRate +"</paycompvalue>"
 				     payload += "<payComponent>1010</payComponent>";
 				     //payload += "<endDate>"+item.endDateMS+"</endDate>";
