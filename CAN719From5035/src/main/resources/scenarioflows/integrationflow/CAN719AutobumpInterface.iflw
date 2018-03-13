@@ -480,11 +480,11 @@
         </ifl:property>
         <ifl:property>
           <key>authenticationMethod</key>
-          <value>Basic</value>
+          <value>Client Certificate</value>
         </ifl:property>
         <ifl:property>
           <key>credentialName</key>
-          <value>{{DP_CREDENTIAL}}</value>
+          <value>{{DP_CREDENTIAL_}}</value>
         </ifl:property>
         <ifl:property>
           <key>privateKeyAlias</key>
@@ -1044,7 +1044,7 @@
         </ifl:property>
         <ifl:property>
           <key>authenticationMethod</key>
-          <value>Basic</value>
+          <value>Client Certificate</value>
         </ifl:property>
         <ifl:property>
           <key>credentialName</key>

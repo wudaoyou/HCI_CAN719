@@ -232,7 +232,7 @@ def Message processData(Message message) {
 			     String payKey = item.personIdExternal+"P"+"1005"+item.startDate;
 			      seqNumber ="";
 			     if(sequenceMap.get(payKey)==null){
-			         seqNumber = 1;
+			         seqNumber = "1";
 			     }else{
 			         seqNumber = Integer.parseInt(sequenceMap.get(payKey))+1+"";
 			         
@@ -257,7 +257,12 @@ def Message processData(Message message) {
 			     if( Double.valueOf(item.premiumRate)>0) {
 			          String preKey = item.personIdExternal+"P"+"1010"+item.startDate;
 			     seqNumber ="";
-				 seqNumber = (sequenceMap.get(preKey)==null?"1":sequenceMap.get(preKey));
+			     if(sequenceMap.get(payKey)==null){
+			         seqNumber = "1";
+			     }else{
+			         seqNumber = Integer.parseInt(sequenceMap.get(payKey))+1+"";
+			         
+			     }
 			         payload="";
 				     payload += "<EmpPayCompRecurring>";  
 				     payload += "<userId>"+eeJob.user_id+"</userId>";
