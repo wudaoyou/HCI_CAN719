@@ -36,13 +36,13 @@ class UpsertItem {
 	String startDateMS
 	String endDate;
 	String endDateMS;
-	String eventReason = "PCAUTOB";
+	String eventReason;
 	String payScaleGroup;
 	String payScaleArea;
 	String payScaleType;
 	String payScaleLevel;
-	String customString9 = "00000518" ;
-	String seqNumber= "1";
+	String customString9 ;
+	String seqNumber;
 	String hourlyRate;
 	String annualRate;
 	String premiumRate;
@@ -100,6 +100,8 @@ def Message processData(Message message) {
 		item.hourlyRate = it.HourlyRate;
 		item.annualRate = it.AnnualRate;
 		item.premiumRate = it.PremiumRate;
+		String reason = it.Reason;
+		item.eventReason = reason.equals('01') ? "PCAUTOB" : "PCSCLCHG";
 		
 		
 		upsertItems.add(item);

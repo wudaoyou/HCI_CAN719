@@ -222,7 +222,7 @@ def Message processData(Message message) {
 			     payload += "<userId>"+eeJob.user_id+"</userId>";
 			     payload += "<startDate>"+item.startDate+"T00:00:00.000Z"+"</startDate>";
 			     payload += "<eventReason>"+item.eventReason+"</eventReason>";
-			     payload += "<endDate>"+item.endDate+"</endDate>";
+			    // payload += "<endDate>"+item.endDate+"</endDate>";
 			     payload += "</EmpCompensation>";  
 			     uxml.compXML += payload;
 			     //pay recurring basic pay xml
