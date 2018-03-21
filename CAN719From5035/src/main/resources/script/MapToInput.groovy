@@ -210,6 +210,8 @@ def Message processData(Message message) {
 			     payload += "<seqNumber>"+seqNumber+"</seqNumber>";
 				 payload += "<customString9>"+eeJob.custom_string9+"</customString9>";   
 				 payload += "<customString22>"+eeJob.custom_string22+"</customString22>";
+				 //add for rate in job
+				 payload += "<customDouble3>"+item.hourlyRate+"</customDouble3>";
 				 payload += "<endDate>"+item.endDate+"</endDate>";
 			     payload += "</EmpJob>";    
 			     uxml.jobXML = uxml.jobXML + payload;
