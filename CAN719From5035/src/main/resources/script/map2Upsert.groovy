@@ -89,6 +89,9 @@ def Message processData(Message message) {
 		
 		dateStr = it.ChangedOnDate;
 		item.changedOnDate = dateStr;
+		def(reason, seqnr) = it.Reason.toString().tokenize('-');
+		//String[] reasonSeqnr = it.Reason.toString().split('-');
+		
 		
 		//set payscale
 		//example: CAN/15/Z5/20160314/01
@@ -100,8 +103,8 @@ def Message processData(Message message) {
 		item.hourlyRate = it.HourlyRate;
 		item.annualRate = it.AnnualRate;
 		item.premiumRate = it.PremiumRate;
-		String reason = it.Reason;
-		item.eventReason = reason.equals('01') ? "PCAUTOB" : "PCSCLCHG";
+		item.seqNumber = seqnr;
+		item.eventReason = reason.equals("01") ? "PCAUTOB" : "OTHER";
 		
 		
 		upsertItems.add(item);
