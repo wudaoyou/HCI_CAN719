@@ -27,6 +27,7 @@
 import com.sap.gateway.ip.core.customdev.util.Message;
 import java.util.*;
 import groovy.xml.*;
+import java.text.SimpleDateFormat;  
 
 public class JobData {
 	String user_id;
@@ -54,7 +55,7 @@ class NotifyItem {
 	String endDate;
 	String beginDate;
 	String changedOnDate;
-	String sequenceNumber = "0";//dummy
+	String sequenceNumber;
 	String status="";
 	String toString(){
 	    return personnelNumber+" "+userId +" "+ endDate+" "+ beginDate+" "+ endDate+" "+ status;
@@ -62,6 +63,51 @@ class NotifyItem {
 
 }
 
+class PersonHistory{
+	String pernr;
+    List<PayComp> payCompHistory;
+    
+    public PersonHistory(){
+    }
+    
+    public PersonHistory(String pernr){
+    	this.pernr = pernr;
+    	this.payCompHistory = new ArrayList<>();
+    	}
+    
+    public void setPayCompHistory(PayComp pc){
+           if(this.payCompHistory==null){
+           		this.payCompHistory = new ArrayList<>();
+    		}
+    		this.payCompHistory.add(pc);
+		}
+		
+  	public String getReason(String startDate, String endDate){
+  		//ec date format is yyyy-MM-dd
+  		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+  		Date startDateIn=sdf.parse(startDate);
+  		Date endDateIn=sdf.parse(endDate);
+  	    
+  	    for(int i=0; i<payCompHistory.size(); i++){
+  	    	Date start = sdf.parse(payCompHistory.get(i).startDate);
+  	  		Date end = sdf.parse(payCompHistory.get(i).endDate);
+  	  		if(start.compareTo(startDateIn)<=0 && end.compareTo(endDateIn)>=0 ){
+  	  		     String reason = payCompHistory.get(i).eventReason;
+  	  		     if(reason.equals("PCAUTOB") && i >0){
+                     reason = payCompHistory.get(i-1).eventReason;
+                   }
+                   return reason;                 
+  	  			 }                               
+  			}
+  		}
+}
+
+class PayComp{
+    String startDate;
+    String endDate;
+    String eventReason;
+   
+}
 
 def Message processData(Message message) {
 	
@@ -78,12 +124,13 @@ def Message processData(Message message) {
 	HashMap<String, JobData> jobMap = new HashMap<String, JobData>();
 	
 	String enableLogging = pmap.get("ENABLE_LOGGING");	
-	if(enableLogging != null && enableLogging.toUpperCase().equals("TRUE")){				
+	if (enableLogging != null && enableLogging.toUpperCase().equals("TRUE")){				
 		if(messageLog != null){
 			messageLog.addAttachmentAsString("03 From EC", inXML, "text/xml");
 		}
 	}
 	Map<String,String> sequenceMap = new HashMap<>();
+	Map<String,PersonHistory> historyMap = new HashMap<>();
 
 	// beging mapping
 	def compoundEEs = body.CompoundEmployee;
@@ -101,6 +148,7 @@ def Message processData(Message message) {
 		 pernrList.add(pernr);
 		 uid  = it.person.logon_user_id;
 		 userIdList.add(uid);
+		 PersonHistory ph = new PersonHistory(pernr);
 		 	 
 		for (def emp in it.person.employment_information) {
 			
@@ -125,13 +173,18 @@ def Message processData(Message message) {
 			
 			for (def comp in emp.compensation_information){
 			         key = pernr+"C"+comp.start_date;     
-			         sequenceMap.put(key,comp.seq_number);    
-			         
+			         sequenceMap.put(key,comp.seq_number);   
+			         PayComp pc = new PayComp();
+			         pc.startDate = comp.start_date;
+			         pc.endDate = comp.end_date;
+			         pc.eventReason = comp.event_reason;
+			         ph.setPayCompHistory(pc);
+			         historyMap.put(pernr, ph);         
+			          
 			    for(def pay in emp.compensation_information.paycompensation_recurring){
              		 key = pernr+"P"+pay.pay_component+pay.start_date;         
 			         sequenceMap.put(key,pay.seq_number.toString());
 					 }
-              
 			              
 			 }
 
@@ -197,11 +250,19 @@ def Message processData(Message message) {
 				 String jobKey = item.personIdExternal+"J"+item.startDate;
 				 String seqNumber ="";
 				 seqNumber = (sequenceMap.get(jobKey)==null?"1":sequenceMap.get(jobKey)+"");
+				// get event Reason
+				String eventReason = item.eventReason;
+				if(item.eventReason.equals("OTHER")){
+				    PersonHistory history = historyMap.get(item.personIdExternal);
+				    eventReason = history.getReason(item.startDate,item.endDate)
+				}
 
+				
+				
 				 payload=""
 			     payload += "<EmpJob>";  
 			     payload += "<startDate>"+item.startDate+"T00:00:00.000Z"+"</startDate>";
-			     payload += "<eventReason>"+item.eventReason+"</eventReason>";
+			     payload += "<eventReason>"+eventReason+"</eventReason>";
 			     payload += "<payScaleGroup>"+item.payScaleGroup+"</payScaleGroup>";
 			     payload += "<payScaleArea>"+item.payScaleArea+"</payScaleArea>";
 			     payload += "<userId>"+eeJob.user_id+"</userId>";
@@ -223,7 +284,7 @@ def Message processData(Message message) {
 			     payload += "<EmpCompensation>";  
 			     payload += "<userId>"+eeJob.user_id+"</userId>";
 			     payload += "<startDate>"+item.startDate+"T00:00:00.000Z"+"</startDate>";
-			     payload += "<eventReason>"+item.eventReason+"</eventReason>";
+			     payload += "<eventReason>"+eventReason+"</eventReason>";
 			    // payload += "<endDate>"+item.endDate+"</endDate>";
 			     payload += "</EmpCompensation>";  
 			     uxml.compXML += payload;
@@ -288,6 +349,7 @@ def Message processData(Message message) {
 			     notify.endDate = item.endDate+"T23:59:59Z";
 			     notify.beginDate = item.startDate+"T00:00:00Z";
 			     notify.changedOnDate = item.changedOnDate;
+			     notify.sequenceNumber = item.seqNumber;
 			     notify.status = "1";
 			     notifyList.add(notify);
 			     
