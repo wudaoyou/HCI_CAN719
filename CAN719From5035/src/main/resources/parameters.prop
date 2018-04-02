@@ -1,5 +1,5 @@
 #Parameter data and values
-#Fri Mar 16 00:04:36 PDT 2018
+#Mon Apr 02 16:50:45 PDT 2018
 COMPANY=0004,0053,0054
 BATCH_SIZE=200
 DP_ENDPOINT=https\://accessnetad.costco.com/AutoPayIncrease

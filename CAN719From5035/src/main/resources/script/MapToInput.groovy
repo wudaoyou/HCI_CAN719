@@ -84,17 +84,20 @@ class PersonHistory{
 		
   	public String getReason(String startDate, String endDate){
   		//ec date format is yyyy-MM-dd
+  		List<PayComp> historyCopy = new ArrayList<>();
+  		historyCopy.addAll(payCompHistory);
+  		Collections.reverse(historyCopy);
   		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
   		Date startDateIn=sdf.parse(startDate);
   		Date endDateIn=sdf.parse(endDate);
   	    
-  	    for(int i=0; i<payCompHistory.size(); i++){
-  	    	Date start = sdf.parse(payCompHistory.get(i).startDate);
-  	  		Date end = sdf.parse(payCompHistory.get(i).endDate);
+  	    for(int i=0; i<historyCopy.size(); i++){
+  	    	Date start = sdf.parse(historyCopy.get(i).startDate);
+  	  		Date end = sdf.parse(historyCopy.get(i).endDate);
   	  		if(start.compareTo(startDateIn)<=0 && end.compareTo(endDateIn)>=0 ){
-  	  		     String reason = payCompHistory.get(i).eventReason;
+  	  		     String reason = historyCopy.get(i).eventReason;
   	  		     if(reason.equals("PCAUTOB") && i >0){
-                     reason = payCompHistory.get(i-1).eventReason;
+                     reason = historyCopy.get(i-1).eventReason;
                    }
                    return reason;                 
   	  			 }                               
