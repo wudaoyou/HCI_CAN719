@@ -205,8 +205,8 @@ def Message processData(Message message) {
 			         key = pernr+"C"+comp.start_date;     
 			         sequenceMap.put(key,comp.seq_number);   
 			         PayComp pc = new PayComp();
-			         pc.setStartDate(comp.start_date);
-			         pc.setEndDate(comp.end_date);
+			         pc.setStartDate(comp.start_date.toString());
+			         pc.setEndDate(comp.end_date.toString());
 			         pc.eventReason = comp.event_reason;
 			         ph.setPayCompHistory(pc);
 			         historyMap.put(pernr, ph);         
