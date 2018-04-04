@@ -289,7 +289,6 @@ def Message processData(Message message) {
 				String eventReason = item.eventReason;
 				if(item.eventReason.equals("OTHER")){
 				    PersonHistory history = historyMap.get(item.personIdExternal);
-				    history.set
 				    eventReason = history.getReason(item.startDate,item.endDate)
 				}
 
