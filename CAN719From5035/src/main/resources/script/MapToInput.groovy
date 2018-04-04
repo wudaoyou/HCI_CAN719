@@ -81,6 +81,7 @@ class PersonHistory{
     		}
     		this.payCompHistory.add(pc);
 		}
+
 		
   	public String getReason(String startDate, String endDate){
   		//ec date format is yyyy-MM-dd
@@ -90,26 +91,52 @@ class PersonHistory{
   		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
   		Date startDateIn=sdf.parse(startDate);
   		Date endDateIn=sdf.parse(endDate);
+  		boolean secondCheck = false;
+  		 String reason  ="";
   	    
   	    for(int i=0; i<historyCopy.size(); i++){
   	    	Date start = sdf.parse(historyCopy.get(i).startDate);
   	  		Date end = sdf.parse(historyCopy.get(i).endDate);
-  	  		if(start.compareTo(startDateIn)<=0 && end.compareTo(endDateIn)>=0 ){
-  	  		     String reason = historyCopy.get(i).eventReason;
+  	  		if(secondCheck == false){
+  	  		   		if(start.compareTo(startDateIn)<=0 && end.compareTo(endDateIn)>=0 ){
+  	  		   reason = historyCopy.get(i).eventReason;
   	  		     if(reason.equals("PCAUTOB") && i >0){
-                     reason = historyCopy.get(i-1).eventReason;
+                     secondCheck = true;
+                   }else{
+                       return reason; 
                    }
-                   return reason;                 
-  	  			 }                               
+               }                 
+  	  		 }else{
+  	  		     if(historyCopy.get(i).eventReason.equals("PCAUTOB")){
+  	  		         continue;
+  	  		     }else{
+  	  		         return historyCopy.get(i).eventReason;
+  	  		     }
+  	  		 }                              
   			}
   		}
 }
 
-class PayComp{
+class PayComp implements Comparable<PayComp>{
     String startDate;
     String endDate;
     String eventReason;
+    Date start;
+    Date end;
+    public void setStartDate(String startDate){
+    	 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+         this.startDate = startDate;  
+         this.start =  sdf.parse(startDate);                     
+   }
+   public void setEndDate(String endDate){
+   		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+         this.endDate = endDate; 
+         this.end =  sdf.parse(endDate);                               
+   }
    
+   public int compareTo(PayComp anotherPayComp) {
+    	return anotherPayComp.end.compareTo(this.end);
+	}
 }
 
 def Message processData(Message message) {
@@ -178,8 +205,8 @@ def Message processData(Message message) {
 			         key = pernr+"C"+comp.start_date;     
 			         sequenceMap.put(key,comp.seq_number);   
 			         PayComp pc = new PayComp();
-			         pc.startDate = comp.start_date;
-			         pc.endDate = comp.end_date;
+			         pc.setStartDate(comp.start_date);
+			         pc.setEndDate(comp.end_date);
 			         pc.eventReason = comp.event_reason;
 			         ph.setPayCompHistory(pc);
 			         historyMap.put(pernr, ph);         
@@ -253,10 +280,16 @@ def Message processData(Message message) {
 				 String jobKey = item.personIdExternal+"J"+item.startDate;
 				 String seqNumber ="";
 				 seqNumber = (sequenceMap.get(jobKey)==null?"1":sequenceMap.get(jobKey)+"");
+				
+				// add current item to history
+				PersonHistory history = historyMap.get(item.personIdExternal);
+				history.setHistory(item);
+				
 				// get event Reason
 				String eventReason = item.eventReason;
 				if(item.eventReason.equals("OTHER")){
 				    PersonHistory history = historyMap.get(item.personIdExternal);
+				    history.set
 				    eventReason = history.getReason(item.startDate,item.endDate)
 				}
 
