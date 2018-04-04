@@ -91,29 +91,30 @@ class PersonHistory{
   		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
   		Date startDateIn=sdf.parse(startDate);
   		Date endDateIn=sdf.parse(endDate);
-  		boolean secondCheck = false;
+  		int pos=0;
   		 String reason  ="";
   	    
   	    for(int i=0; i<historyCopy.size(); i++){
   	    	Date start = sdf.parse(historyCopy.get(i).startDate);
   	  		Date end = sdf.parse(historyCopy.get(i).endDate);
-  	  		if(secondCheck == false){
+  	  		
   	  		   		if(start.compareTo(startDateIn)<=0 && end.compareTo(endDateIn)>=0 ){
-  	  		   reason = historyCopy.get(i).eventReason;
-  	  		     if(reason.equals("PCAUTOB") && i >0){
-                     secondCheck = true;
-                   }else{
+  	  		   		reason = historyCopy.get(i).eventReason;
+  	  		   		pos = i;
+  	  		     if(!(reason.equals("PCAUTOB"))){
                        return reason; 
-                   }
-               }                 
-  	  		 }else{
-  	  		     if(historyCopy.get(i).eventReason.equals("PCAUTOB")){
-  	  		         continue;
-  	  		     }else{
-  	  		         return historyCopy.get(i).eventReason;
-  	  		     }
-  	  		 }                              
+                  }
+               }                                          
   			}
+  		//	second pass
+  		for(int j = pos;j>=0;j--){
+  			reason = historyCopy.get(j).eventReason;
+  			if(!(reason.equals("PCAUTOB"))){
+                       return reason; 
+            }            
+  		}
+		return reason;
+  			
   		}
 }
 
