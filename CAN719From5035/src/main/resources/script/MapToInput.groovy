@@ -281,10 +281,6 @@ def Message processData(Message message) {
 				 String seqNumber ="";
 				 seqNumber = (sequenceMap.get(jobKey)==null?"1":sequenceMap.get(jobKey)+"");
 				
-				// add current item to history
-				PersonHistory history = historyMap.get(item.personIdExternal);
-				history.setHistory(item);
-				
 				// get event Reason
 				String eventReason = item.eventReason;
 				if(item.eventReason.equals("OTHER")){
