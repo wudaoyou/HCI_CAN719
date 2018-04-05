@@ -49,9 +49,24 @@ class UpsertItem {
 	String changedOnDate;
 }
 
+def Map<String,String> getReasonFromNumber(){
+	Map<String,String> reasonCodeMap = new HashMap<>();
+	reasonCodeMap.put("01","PCAUTOB");
+	reasonCodeMap.put("03","PCANNINC");
+	reasonCodeMap.put("04","PCADJUST");
+	reasonCodeMap.put("05","PCMERIT");
+	reasonCodeMap.put("06","PCRATCHG");
+	reasonCodeMap.put("07","PCSCLCHG");
+	reasonCodeMap.put("08","PCHRSRES");
+	reasonCodeMap.put("09","PCHRSRET");
+	reasonCodeMap.put("99","OTHER");
+	return reasonCodeMap;
+ }
+
 def Message processData(Message message) {
 
 	List<UpsertItem> upsertItems = new ArrayList<UpsertItem>();
+	Map<String,String> reasonMap = getReasonFromNumber();
 	
 	def pmap = message.getProperties();
 	String enableLogging = pmap.get("ENABLE_LOGGING");
@@ -104,7 +119,8 @@ def Message processData(Message message) {
 		item.annualRate = it.AnnualRate;
 		item.premiumRate = it.PremiumRate;
 		item.seqNumber = seqnr;
-		item.eventReason = reason.equals("01") ? "PCAUTOB" : "OTHER";
+		item.eventReason = reasonMap.get(reason);
+		//item.eventReason = reason.equals("01") ? "PCAUTOB" : "OTHER";
 		
 		
 		upsertItems.add(item);
