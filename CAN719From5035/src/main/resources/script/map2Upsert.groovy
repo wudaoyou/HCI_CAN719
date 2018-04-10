@@ -27,28 +27,46 @@
 import com.sap.gateway.ip.core.customdev.util.Message;
 import java.util.*;
 import groovy.xml.*;
+import java.text.SimpleDateFormat;
 
 class UpsertItem {
     String personIdExternal;
 	String userId;
 	String startDate;
+	String startDateMS
 	String endDate;
-	String eventReason = "PCAUTOB";
+	String endDateMS;
+	String eventReason;
 	String payScaleGroup;
 	String payScaleArea;
 	String payScaleType;
 	String payScaleLevel;
-	String customString9 = "00000518" ;
-	String seqNumber= "1";
+	String customString9 ;
+	String seqNumber;
 	String hourlyRate;
 	String annualRate;
 	String premiumRate;
 	String changedOnDate;
 }
 
+def Map<String,String> getReasonFromNumber(){
+	Map<String,String> reasonCodeMap = new HashMap<>();
+	reasonCodeMap.put("01","PCAUTOB");
+	reasonCodeMap.put("03","PCANNINC");
+	reasonCodeMap.put("04","PCADJUST");
+	reasonCodeMap.put("05","PCMERIT");
+	reasonCodeMap.put("06","PCRATCHG");
+	reasonCodeMap.put("07","PCSCLCHG");
+	reasonCodeMap.put("08","PCHRSRES");
+	reasonCodeMap.put("09","PCHRSRET");
+	reasonCodeMap.put("99","OTHER");
+	return reasonCodeMap;
+ }
+
 def Message processData(Message message) {
 
 	List<UpsertItem> upsertItems = new ArrayList<UpsertItem>();
+	Map<String,String> reasonMap = getReasonFromNumber();
 	
 	def pmap = message.getProperties();
 	String enableLogging = pmap.get("ENABLE_LOGGING");
@@ -61,6 +79,8 @@ def Message processData(Message message) {
 
 	
 	String payload = "";
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	    
 	
 	def results = body.'env:Body'.'n0:loadResponse'.Response.LoadEmployee;
 	
@@ -72,11 +92,21 @@ def Message processData(Message message) {
 		//2017-11-04T19:41:17Z
 		String dateStr = it.BeginDate;
 		item.startDate =  dateStr.substring(0,10);
+		Date date = sdf.parse(item.startDate);
+		long millis = date.getTime();
+		item.startDateMS =  "Date(" + millis + ")";
 		dateStr="";
 		dateStr = it.EndDate;
 		item.endDate =  dateStr.substring(0,10);
+		date = sdf.parse(item.endDate);
+		millis = date.getTime();
+		item.endDateMS =  "Date(" + millis + ")";
+		
 		dateStr = it.ChangedOnDate;
 		item.changedOnDate = dateStr;
+		def(reason, seqnr) = it.Reason.toString().tokenize('-');
+		//String[] reasonSeqnr = it.Reason.toString().split('-');
+		
 		
 		//set payscale
 		//example: CAN/15/Z5/20160314/01
@@ -88,13 +118,10 @@ def Message processData(Message message) {
 		item.hourlyRate = it.HourlyRate;
 		item.annualRate = it.AnnualRate;
 		item.premiumRate = it.PremiumRate;
-		if(it.PersonnelNumber.equals("5028420")){
-		    messageLog.setStringProperty("PersonnelNumber: ", it.PersonnelNumber.toString());
-		    messageLog.setStringProperty("HourlyRate: ", it.HourlyRate.toString());
-		    messageLog.setStringProperty("AnnualRate: ", it.AnnualRate.toString());
-		    messageLog.setStringProperty("premiumRate: ", it.PremiumRate.toString());
-		}
-
+		item.seqNumber = seqnr;
+		item.eventReason = reasonMap.get(reason);
+		//item.eventReason = reason.equals("01") ? "PCAUTOB" : "OTHER";
+		
 		
 		upsertItems.add(item);
 	}

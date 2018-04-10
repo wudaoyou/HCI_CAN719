@@ -8,12 +8,13 @@ def pmap = message.getProperties();
         if(errorList.size>0){
             for(e in errorList){
             	String s = e;
-                 int start = s.indexOf("startDate");
-		 		 s = s.substring(start+10);
-		 		 String startDate = s.substring(0,s.indexOf('T') );
+                 int pos = s.indexOf("startDate");
+		 		 s=s.substring(pos+10);
+		 		 String startDate = s.substring(0, s.indexOf('T'));
 		         startDate += "T00:00:00Z";
-		         start = s.indexOf("userId");
-		         String userId  = s.substring(start+7);
+		         pos = s.indexOf("userId");
+				 s=s.substring(pos+ 7);
+				 String userId = s.substring(0, s.indexOf('}'));
 		         
 		         for(item in notifyList){
 		             if(item.userId.equals(userId)&& item.beginDate.equals(startDate)&& !(item.status.equals("4"))){
@@ -27,7 +28,7 @@ def pmap = message.getProperties();
  }
 
 def Message processData(Message message) {
-
+def messageLog = messageLogFactory.getMessageLog(message);
 	def pmap = message.getProperties();
 	String enableLogging = pmap.get("ENABLE_LOGGING");
 	String pernrs = pmap.get("PERSON_ID_EXTERNAL_PARAMETER");
@@ -50,21 +51,21 @@ def Message processData(Message message) {
   	if(results != null){
   	    results.each{
          def status = it.status
+         messageLog.setStringProperty("message : ", it.message.toString());
          if(it.status.equals("ERROR")){
-               errorList.add(it.key);
+               errorList.add(it.message.toString());
          }  
     }
                  
   }
-  
-  updateNotifyList(errorList, message);
-  
 	
 	if(enableLogging != null && enableLogging.toUpperCase().equals("TRUE")){
-		def messageLog = messageLogFactory.getMessageLog(message);
+		
 		if(messageLog != null){
 			messageLog.addAttachmentAsString("EC update result ", inXML, "text/xml");
 		}
 	}
+	
+	updateNotifyList(errorList, message);
 	return message;
 }

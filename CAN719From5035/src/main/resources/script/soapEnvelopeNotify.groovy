@@ -35,7 +35,7 @@ def messageLog = messageLogFactory.getMessageLog(message);
 		payload+="<EndDate>"+item.endDate+"</EndDate>";
 		payload+="<BeginDate>"+item.beginDate+"</BeginDate>";
 		payload+="<ChangedOnDate>"+item.changedOnDate+"</ChangedOnDate>";
-		payload+="<SequenceNumber>1</SequenceNumber>"; //this is a dummy value. sequence number is not used for this op.
+		payload+="<SequenceNumber>"+item.sequenceNumber+"</SequenceNumber>"; //this is a dummy value. sequence number is not used for this op.
 		payload+="<Status>"+item.status+"</Status>";  // status 99 = reset, 0 = success, 1 = processing, 4 = failed 
 		payload+="</NotifyEmployee>";            
 	}

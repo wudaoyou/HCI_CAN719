@@ -328,7 +328,7 @@
         </ifl:property>
         <ifl:property>
           <key>customQueryOptions</key>
-          <value></value>
+          <value>purgeType=incremental&amp;suppressUpdateOfIdenticalData=true</value>
         </ifl:property>
         <ifl:property>
           <key>contentType</key>
@@ -372,7 +372,7 @@
         </ifl:property>
         <ifl:property>
           <key>fields</key>
-          <value>userId,startDate,seqNumber,payScaleType,payScaleLevel,payScaleGroup,payScaleArea,eventReason,customString9,customString22,endDate</value>
+          <value>userId,startDate,seqNumber,payScaleType,payScaleLevel,payScaleGroup,payScaleArea,eventReason,customString9,customString22,customDouble3,endDate</value>
         </ifl:property>
         <ifl:property>
           <key>receiveTimeOut</key>
@@ -480,11 +480,11 @@
         </ifl:property>
         <ifl:property>
           <key>authenticationMethod</key>
-          <value>Basic</value>
+          <value>Client Certificate</value>
         </ifl:property>
         <ifl:property>
           <key>credentialName</key>
-          <value>{{DP_CREDENTIAL}}</value>
+          <value>{{DP_CREDENTIAL_}}</value>
         </ifl:property>
         <ifl:property>
           <key>privateKeyAlias</key>
@@ -604,7 +604,7 @@
         </ifl:property>
         <ifl:property>
           <key>customQueryOptions</key>
-          <value></value>
+          <value>purgeType=incremental&amp;suppressUpdateOfIdenticalData=true</value>
         </ifl:property>
         <ifl:property>
           <key>contentType</key>
@@ -720,7 +720,7 @@
         </ifl:property>
         <ifl:property>
           <key>fields</key>
-          <value>userId,startDate,seqNumber,paycompvalue,payComponent,endDate</value>
+          <value>userId,startDate,seqNumber,paycompvalue,payComponent</value>
         </ifl:property>
         <ifl:property>
           <key>queryOptions</key>
@@ -728,7 +728,7 @@
         </ifl:property>
         <ifl:property>
           <key>customQueryOptions</key>
-          <value></value>
+          <value>purgeType=incremental&amp;suppressUpdateOfIdenticalData=true</value>
         </ifl:property>
         <ifl:property>
           <key>contentType</key>
@@ -892,7 +892,7 @@
         </ifl:property>
         <ifl:property>
           <key>customQueryOptions</key>
-          <value></value>
+          <value>purgeType=incremental&amp;suppressUpdateOfIdenticalData=true</value>
         </ifl:property>
         <ifl:property>
           <key>contentType</key>
@@ -936,7 +936,7 @@
         </ifl:property>
         <ifl:property>
           <key>fields</key>
-          <value>userId,startDate,seqNumber,paycompvalue,payComponent,endDate</value>
+          <value>userId,startDate,seqNumber,paycompvalue,payComponent</value>
         </ifl:property>
         <ifl:property>
           <key>receiveTimeOut</key>
@@ -1044,7 +1044,7 @@
         </ifl:property>
         <ifl:property>
           <key>authenticationMethod</key>
-          <value>Basic</value>
+          <value>Client Certificate</value>
         </ifl:property>
         <ifl:property>
           <key>credentialName</key>
@@ -1106,7 +1106,7 @@
           </ifl:property>
           <ifl:property>
             <key>scheduleKey</key>
-            <value>&lt;row>&lt;cell>dateType&lt;/cell>&lt;cell>&lt;/cell>&lt;/row>&lt;row>&lt;cell>timeType&lt;/cell>&lt;cell>&lt;/cell>&lt;/row>&lt;row>&lt;cell>dayValue&lt;/cell>&lt;cell>&lt;/cell>&lt;/row>&lt;row>&lt;cell>monthValue&lt;/cell>&lt;cell>&lt;/cell>&lt;/row>&lt;row>&lt;cell>yearValue&lt;/cell>&lt;cell>&lt;/cell>&lt;/row>&lt;row>&lt;cell>onWeekly&lt;/cell>&lt;cell>&lt;/cell>&lt;/row>&lt;row>&lt;cell>onMonthly&lt;/cell>&lt;cell>&lt;/cell>&lt;/row>&lt;row>&lt;cell>OnEveryMinute&lt;/cell>&lt;cell>&lt;/cell>&lt;/row>&lt;row>&lt;cell>fromInterval&lt;/cell>&lt;cell>&lt;/cell>&lt;/row>&lt;row>&lt;cell>toInterval&lt;/cell>&lt;cell>&lt;/cell>&lt;/row>&lt;row>&lt;cell>timeZone&lt;/cell>&lt;cell>( UTC 0:00 ) GMT+00:00(Etc/GMT)&lt;/cell>&lt;/row>&lt;row>&lt;cell>secondValue&lt;/cell>&lt;cell>0&lt;/cell>&lt;/row>&lt;row>&lt;cell>minutesValue&lt;/cell>&lt;cell>&lt;/cell>&lt;/row>&lt;row>&lt;cell>hourValue&lt;/cell>&lt;cell>&lt;/cell>&lt;/row>&lt;row>&lt;cell>triggerType&lt;/cell>&lt;cell>simple&lt;/cell>&lt;/row>&lt;row>&lt;cell>noOfSchedules&lt;/cell>&lt;cell>1&lt;/cell>&lt;/row>&lt;row>&lt;cell>schedule1&lt;/cell>&lt;cell>fireNow=true&lt;/cell>&lt;/row></value>
+            <value>&lt;row>&lt;cell>dayValue&lt;/cell>&lt;cell>9&lt;/cell>&lt;/row>&lt;row>&lt;cell>noOfSchedules&lt;/cell>&lt;cell>1&lt;/cell>&lt;/row>&lt;row>&lt;cell>onWeekly&lt;/cell>&lt;cell>&lt;/cell>&lt;/row>&lt;row>&lt;cell>timeZone&lt;/cell>&lt;cell>( UTC 0:00 ) GMT+00:00(Etc/GMT)&lt;/cell>&lt;/row>&lt;row>&lt;cell>timeType&lt;/cell>&lt;cell>ON_TIME&lt;/cell>&lt;/row>&lt;row>&lt;cell>yearValue&lt;/cell>&lt;cell>2018&lt;/cell>&lt;/row>&lt;row>&lt;cell>OnEveryMinute&lt;/cell>&lt;cell>10&lt;/cell>&lt;/row>&lt;row>&lt;cell>toInterval&lt;/cell>&lt;cell>24&lt;/cell>&lt;/row>&lt;row>&lt;cell>schedule1&lt;/cell>&lt;cell>fireNow=true&amp;amp;trigger.repeatCount=0&amp;amp;trigger.repeatInterval=0&lt;/cell>&lt;/row>&lt;row>&lt;cell>dateType&lt;/cell>&lt;cell>ON_DATE&lt;/cell>&lt;/row>&lt;row>&lt;cell>onMonthly&lt;/cell>&lt;cell>&lt;/cell>&lt;/row>&lt;row>&lt;cell>monthValue&lt;/cell>&lt;cell>4&lt;/cell>&lt;/row>&lt;row>&lt;cell>secondValue&lt;/cell>&lt;cell>0&lt;/cell>&lt;/row>&lt;row>&lt;cell>hourValue&lt;/cell>&lt;cell>9&lt;/cell>&lt;/row>&lt;row>&lt;cell>minutesValue&lt;/cell>&lt;cell>50&lt;/cell>&lt;/row>&lt;row>&lt;cell>fromInterval&lt;/cell>&lt;cell>0&lt;/cell>&lt;/row>&lt;row>&lt;cell>triggerType&lt;/cell>&lt;cell>simple&lt;/cell>&lt;/row></value>
           </ifl:property>
         </bpmn2:extensionElements>
       </bpmn2:timerEventDefinition>
