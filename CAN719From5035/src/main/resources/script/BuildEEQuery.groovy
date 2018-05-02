@@ -41,8 +41,11 @@ def Message processData(Message message) {
 	for(ee in eeList){
 		personIdExternal += ee + ",";                  
 	}
-	personIdExternal = personIdExternal.substring(0,personIdExternal.length()-1);
-
+	if(personIdExternal != null&& personIdExternal.length()>0){
+    	personIdExternal = personIdExternal.substring(0,personIdExternal.length()-1);
+	}else{
+	    message.setProperty("NO_EE_FOUND", "TRUE");
+	}
 
 	
 
