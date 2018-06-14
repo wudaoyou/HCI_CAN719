@@ -87,7 +87,7 @@ def Message processData(Message message) {
 	results.each {  
 		UpsertItem item = new UpsertItem();
 		//set user id
-		item.personIdExternal = "0"+it.PersonnelNumber;
+		item.personIdExternal = it.PersonnelNumber;
 		//set startDate
 		//2017-11-04T19:41:17Z
 		String dateStr = it.BeginDate;

@@ -14,7 +14,19 @@ def Message processData(Message message) {
 	
 	int eeCount = 0;
 	
-	for (String key : xmlMap.keySet()) {
+		//get keys (employee external) from the xml map
+	List<String> keys = new ArrayList<>(xmlMap.keySet());
+	List<NotifyItem> errorEEs = pmap.get("NOTIFY_LIST");
+	
+	if(errorEEs.size()>0){
+	    for(NotifyItem item: errorEEs){
+	    	if(item.status.equals("4")){
+    			keys.remove(item.personnelNumber);
+			}
+	    }
+	}
+	
+	for (String key : keys) {
 		 item = xmlMap.get(key);
 		 if (item.payRecurPremXML.length()>0){  
 		 		eeCount++;
