@@ -3,9 +3,9 @@ import java.util.*;
 def void updateNotifyList(List errorList, Message message){
 def pmap = message.getProperties();
 		List notifyList =pmap.get("NOTIFY_LIST");
+		def eeCount = pamp.get("EE_COUNT");
 		
-		
-        if(errorList.size>0){
+        if(errorList.size()>0){
             for(e in errorList){
             	String s = e;
                  int pos = s.indexOf("startDate");
@@ -23,7 +23,8 @@ def pmap = message.getProperties();
 		         }
                       
            }
-        }         
+        }  
+		message.setProperty("EE_COUNT",eeCount-errorList.size());
 		message.setProperty("NOTIFY_LIST",notifyList);
  }
 
