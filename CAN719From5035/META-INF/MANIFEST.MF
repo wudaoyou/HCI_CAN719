@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 SAP-BundleType: IntegrationFlow
 Bundle-ClassPath: .
 SAP-RuntimeProfile: iflmap
-Bundle-Version: 1.4.1
+Bundle-Version: 1.4.3
 SAP-NodeType: IFLMAP
 Bundle-Name: CAN719AutobumpInterface
 Bundle-ManifestVersion: 2
