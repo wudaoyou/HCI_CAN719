@@ -14,10 +14,10 @@ def Message processData(Message message) {
 	
 	//get keys (employee external) from the xml map
 	List<String> keys = new ArrayList<>(xmlMap.keySet());
-	List<NotifyItem> errorEEs = pmap.get("NOTIFY_LIST");
+	def errorEEs = pmap.get("NOTIFY_LIST");
 	
 	if(errorEEs.size()>0){
-	    for(NotifyItem item: errorEEs){
+	    for(def item: errorEEs){
 	    	if(item.status.equals("4")){
     			keys.remove(item.personnelNumber);
 			}
