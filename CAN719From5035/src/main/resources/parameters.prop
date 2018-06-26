@@ -1,24 +1,14 @@
 #Parameter data and values
-<<<<<<< HEAD
 #Fri Jun 15 10:21:56 PDT 2018
-=======
-#Tue Jun 26 00:05:13 PDT 2018
->>>>>>> refs/heads/master
 COMPANY=0004,0053,0054
 BATCH_SIZE=200
 DP_ENDPOINT=https\://accessnetad.costco.com/AutoPayIncrease
 COUNTRY=CA
-USER_TEST_EE=5028809
+USER_TEST_EE=
 DP_CREDENTIAL_=
 DP_CREDENTIAL_CERT=hci_l5034
 TEST_MODE=FALSE
 DP_CREDENTIAL=
-<<<<<<< HEAD
 EC_ENDPOINT=https\://api4preview.sapsf.com
-=======
-TEST_MODE=FALSE
-EC_ENDPOINT=https\://api4.successfactors.com
-EC_CREDENTIAL=CostcoQA3_EC
->>>>>>> refs/heads/master
 ENABLE_LOGGING=TRUE
 EC_CREDENTIAL=CostcoT_EC
