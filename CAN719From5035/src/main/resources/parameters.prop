@@ -1,5 +1,5 @@
 #Parameter data and values
-#Fri Jun 15 10:21:56 PDT 2018
+#Tue Jun 26 13:47:50 PDT 2018
 COMPANY=0004,0053,0054
 BATCH_SIZE=200
 DP_ENDPOINT=https\://accessnetad.costco.com/AutoPayIncrease
@@ -7,7 +7,7 @@ COUNTRY=CA
 USER_TEST_EE=
 DP_CREDENTIAL_=
 DP_CREDENTIAL_CERT=hci_l5034
-TEST_MODE=FALSE
+TEST_MODE=TRUE
 DP_CREDENTIAL=
 EC_ENDPOINT=https\://api4preview.sapsf.com
 ENABLE_LOGGING=TRUE

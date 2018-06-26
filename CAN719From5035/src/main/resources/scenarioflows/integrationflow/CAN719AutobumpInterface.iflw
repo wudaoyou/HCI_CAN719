@@ -2339,8 +2339,6 @@
         <dc:Bounds height="36.0" width="36.0" x="1350.0" y="1113.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_99">
           <dc:Bounds height="34.0" width="80.0" x="1328.0" y="1149.0"/>
-<<<<<<< HEAD
-=======
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_7" bpmnElement="ExclusiveGateway_7" isMarkerVisible="true">
@@ -2353,7 +2351,6 @@
         <dc:Bounds height="36.0" width="36.0" x="873.0" y="322.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_27">
           <dc:Bounds height="17.0" width="79.0" x="852.0" y="358.0"/>
->>>>>>> refs/heads/master
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_6" sourceElement="BPMNShape_StartEvent_4">
