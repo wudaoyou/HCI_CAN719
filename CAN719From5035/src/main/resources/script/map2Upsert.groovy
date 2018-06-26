@@ -29,7 +29,7 @@ import java.util.*;
 import groovy.xml.*;
 import java.text.SimpleDateFormat;
 
-class UpsertItem {
+class UpsertItem implements Comparable<UpsertItem>{
     String personIdExternal;
 	String userId;
 	String startDate;
@@ -47,6 +47,22 @@ class UpsertItem {
 	String annualRate;
 	String premiumRate;
 	String changedOnDate;
+	
+	public String getSeqNumber() {
+		return seqNumber;
+	}
+	
+	public int compareTo(UpsertItem compareItem) {
+		
+			String compareSeqNumber = ((UpsertItem) compareItem).getSeqNumber();
+			
+			//ascending order
+			return this.seqNumber.compareTo(compareSeqNumber);
+			
+			//descending order
+			//return compareQuantity - this.quantity;
+			
+		}
 }
 
 def Map<String,String> getReasonFromNumber(){
@@ -125,6 +141,7 @@ def Message processData(Message message) {
 		
 		upsertItems.add(item);
 	}
+	 Collections.sort(upsertItems);
 	message.setProperty("ABH_LIST", upsertItems);
 	
 

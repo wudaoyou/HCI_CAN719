@@ -1,5 +1,5 @@
 #Parameter data and values
-#Thu Jun 14 23:14:22 PDT 2018
+#Mon Jun 25 18:44:36 PDT 2018
 COMPANY=0004,0053,0054
 BATCH_SIZE=200
 DP_ENDPOINT=https\://accessnetsp.costco.com/AutoPayIncrease
@@ -8,7 +8,7 @@ USER_TEST_EE=
 DP_CREDENTIAL_=
 DP_CREDENTIAL_CERT=qa3_hci_l5508
 DP_CREDENTIAL=
-TEST_MODE=TRUE
+TEST_MODE=FALSE
 EC_ENDPOINT=https\://api4.successfactors.com
 EC_CREDENTIAL=CostcoQA3_EC
 ENABLE_LOGGING=TRUE
