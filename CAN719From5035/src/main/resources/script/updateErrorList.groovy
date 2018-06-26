@@ -3,7 +3,7 @@ import java.util.*;
 def void updateNotifyList(List errorList, Message message){
 def pmap = message.getProperties();
 		List notifyList =pmap.get("NOTIFY_LIST");
-		def eeCount = pamp.get("EE_COUNT");
+		def eeCount = pmap.get("EE_COUNT");
 		
         if(errorList.size()>0){
             for(e in errorList){

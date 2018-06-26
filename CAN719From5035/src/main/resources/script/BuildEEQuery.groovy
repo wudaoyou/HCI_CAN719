@@ -74,6 +74,10 @@ def Message processData(Message message) {
 		queryPersonID = "person_id_external IN ('" + personIdExternal + "')";
 	
 		query = queryPersonID;
+	}else{
+		personIdExternal = "99999999"
+		queryPersonID = "person_id_external IN ('" + personIdExternal + "')";
+		query = queryPersonID;
 	}
 	
 	

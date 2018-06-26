@@ -1106,7 +1106,7 @@
           </ifl:property>
           <ifl:property>
             <key>scheduleKey</key>
-            <value>&lt;row>&lt;cell>dayValue&lt;/cell>&lt;cell>9&lt;/cell>&lt;/row>&lt;row>&lt;cell>noOfSchedules&lt;/cell>&lt;cell>1&lt;/cell>&lt;/row>&lt;row>&lt;cell>onWeekly&lt;/cell>&lt;cell>&lt;/cell>&lt;/row>&lt;row>&lt;cell>timeZone&lt;/cell>&lt;cell>( UTC 0:00 ) GMT+00:00(Etc/GMT)&lt;/cell>&lt;/row>&lt;row>&lt;cell>timeType&lt;/cell>&lt;cell>ON_TIME&lt;/cell>&lt;/row>&lt;row>&lt;cell>yearValue&lt;/cell>&lt;cell>2018&lt;/cell>&lt;/row>&lt;row>&lt;cell>OnEveryMinute&lt;/cell>&lt;cell>10&lt;/cell>&lt;/row>&lt;row>&lt;cell>toInterval&lt;/cell>&lt;cell>24&lt;/cell>&lt;/row>&lt;row>&lt;cell>schedule1&lt;/cell>&lt;cell>fireNow=true&amp;amp;trigger.repeatCount=0&amp;amp;trigger.repeatInterval=0&lt;/cell>&lt;/row>&lt;row>&lt;cell>dateType&lt;/cell>&lt;cell>ON_DATE&lt;/cell>&lt;/row>&lt;row>&lt;cell>onMonthly&lt;/cell>&lt;cell>&lt;/cell>&lt;/row>&lt;row>&lt;cell>monthValue&lt;/cell>&lt;cell>4&lt;/cell>&lt;/row>&lt;row>&lt;cell>secondValue&lt;/cell>&lt;cell>0&lt;/cell>&lt;/row>&lt;row>&lt;cell>hourValue&lt;/cell>&lt;cell>9&lt;/cell>&lt;/row>&lt;row>&lt;cell>minutesValue&lt;/cell>&lt;cell>50&lt;/cell>&lt;/row>&lt;row>&lt;cell>fromInterval&lt;/cell>&lt;cell>0&lt;/cell>&lt;/row>&lt;row>&lt;cell>triggerType&lt;/cell>&lt;cell>simple&lt;/cell>&lt;/row></value>
+            <value>&lt;row>&lt;cell>dayValue&lt;/cell>&lt;cell>25&lt;/cell>&lt;/row>&lt;row>&lt;cell>noOfSchedules&lt;/cell>&lt;cell>1&lt;/cell>&lt;/row>&lt;row>&lt;cell>onWeekly&lt;/cell>&lt;cell>&lt;/cell>&lt;/row>&lt;row>&lt;cell>timeZone&lt;/cell>&lt;cell>( UTC 0:00 ) GMT+00:00(Etc/GMT)&lt;/cell>&lt;/row>&lt;row>&lt;cell>timeType&lt;/cell>&lt;cell>ON_TIME&lt;/cell>&lt;/row>&lt;row>&lt;cell>yearValue&lt;/cell>&lt;cell>2018&lt;/cell>&lt;/row>&lt;row>&lt;cell>OnEveryMinute&lt;/cell>&lt;cell>15&lt;/cell>&lt;/row>&lt;row>&lt;cell>toInterval&lt;/cell>&lt;cell>24&lt;/cell>&lt;/row>&lt;row>&lt;cell>schedule1&lt;/cell>&lt;cell>fireNow=true&amp;amp;trigger.repeatCount=0&amp;amp;trigger.repeatInterval=0&lt;/cell>&lt;/row>&lt;row>&lt;cell>dateType&lt;/cell>&lt;cell>ON_DATE&lt;/cell>&lt;/row>&lt;row>&lt;cell>onMonthly&lt;/cell>&lt;cell>&lt;/cell>&lt;/row>&lt;row>&lt;cell>monthValue&lt;/cell>&lt;cell>6&lt;/cell>&lt;/row>&lt;row>&lt;cell>secondValue&lt;/cell>&lt;cell>0&lt;/cell>&lt;/row>&lt;row>&lt;cell>hourValue&lt;/cell>&lt;cell>23&lt;/cell>&lt;/row>&lt;row>&lt;cell>minutesValue&lt;/cell>&lt;cell>57&lt;/cell>&lt;/row>&lt;row>&lt;cell>fromInterval&lt;/cell>&lt;cell>0&lt;/cell>&lt;/row>&lt;row>&lt;cell>triggerType&lt;/cell>&lt;cell>simple&lt;/cell>&lt;/row></value>
           </ifl:property>
         </bpmn2:extensionElements>
       </bpmn2:timerEventDefinition>
@@ -1227,10 +1227,10 @@
       <bpmn2:outgoing>SequenceFlow_41</bpmn2:outgoing>
     </bpmn2:callActivity>
     <bpmn2:serviceTask id="ServiceTask_3" name="Request-Reply">
-      <bpmn2:incoming>SequenceFlow_17</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_12</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_25</bpmn2:outgoing>
     </bpmn2:serviceTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_17" sourceRef="CallActivity_7" targetRef="ServiceTask_3"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_17" sourceRef="CallActivity_7" targetRef="ExclusiveGateway_7"/>
     <bpmn2:serviceTask id="ServiceTask_2" name="Request-Reply">
       <bpmn2:incoming>SequenceFlow_32</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_49</bpmn2:outgoing>
@@ -1756,6 +1756,34 @@
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="_FormalExpression_171">${property.EE_COUNT} = '0' and ${property.TEST_MODE} != 'TRUE'</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_46" sourceRef="CallActivity_20" targetRef="ExclusiveGateway_2"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_7" name="Router" gatewayDirection="Diverging" default="SequenceFlow_12">
+      <bpmn2:extensionElements>
+        <ifl:property>
+          <key>raiseAlert</key>
+          <value>true</value>
+        </ifl:property>
+        <ifl:property>
+          <key>throwException</key>
+          <value>true</value>
+        </ifl:property>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_17</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:endEvent id="EndEvent_4" name="End Event 4">
+      <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_7" name="no ee found" sourceRef="ExclusiveGateway_7" targetRef="EndEvent_4">
+      <bpmn2:extensionElements>
+        <ifl:property>
+          <key>expressionType</key>
+          <value>NonXML</value>
+        </ifl:property>
+      </bpmn2:extensionElements>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression" id="_FormalExpression_216">${property.NO_EE_FOUND} = 'TRUE'</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_12" sourceRef="ExclusiveGateway_7" targetRef="ServiceTask_3"/>
   </bpmn2:process>
   <bpmn2:process id="Process_3" name="Process 3" isExecutable="false">
     <bpmn2:extensionElements>
@@ -2311,6 +2339,21 @@
         <dc:Bounds height="36.0" width="36.0" x="1350.0" y="1113.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_99">
           <dc:Bounds height="34.0" width="80.0" x="1328.0" y="1149.0"/>
+<<<<<<< HEAD
+=======
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ExclusiveGateway_7" bpmnElement="ExclusiveGateway_7" isMarkerVisible="true">
+        <dc:Bounds height="36.0" width="36.0" x="732.0" y="322.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_9">
+          <dc:Bounds height="17.0" width="44.0" x="728.0" y="358.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EndEvent_4" bpmnElement="EndEvent_4">
+        <dc:Bounds height="36.0" width="36.0" x="873.0" y="322.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_27">
+          <dc:Bounds height="17.0" width="79.0" x="852.0" y="358.0"/>
+>>>>>>> refs/heads/master
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_6" sourceElement="BPMNShape_StartEvent_4">
@@ -2319,11 +2362,10 @@
         <di:waypoint xsi:type="dc:Point" x="421.0" y="130.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_8"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_17" bpmnElement="SequenceFlow_17" sourceElement="BPMNShape_CallActivity_7" targetElement="BPMNShape_ServiceTask_3">
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_17" bpmnElement="SequenceFlow_17" sourceElement="BPMNShape_CallActivity_7" targetElement="BPMNShape_ExclusiveGateway_7">
         <di:waypoint xsi:type="dc:Point" x="757.0" y="231.0"/>
-        <di:waypoint xsi:type="dc:Point" x="715.0" y="231.0"/>
-        <di:waypoint xsi:type="dc:Point" x="715.0" y="226.0"/>
-        <di:waypoint xsi:type="dc:Point" x="672.0" y="226.0"/>
+        <di:waypoint xsi:type="dc:Point" x="750.0" y="231.0"/>
+        <di:waypoint xsi:type="dc:Point" x="750.0" y="322.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_37"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_5" bpmnElement="MessageFlow_5" sourceElement="BPMNShape_ServiceTask_3" targetElement="BPMNShape_Participant_2">
@@ -2683,6 +2725,20 @@
         <di:waypoint xsi:type="dc:Point" x="550.0" y="536.0"/>
         <di:waypoint xsi:type="dc:Point" x="550.0" y="610.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_34"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_7" bpmnElement="SequenceFlow_7" sourceElement="BPMNShape_ExclusiveGateway_7" targetElement="BPMNShape_EndEvent_4">
+        <di:waypoint xsi:type="dc:Point" x="768.0" y="340.0"/>
+        <di:waypoint xsi:type="dc:Point" x="820.0" y="340.0"/>
+        <di:waypoint xsi:type="dc:Point" x="873.0" y="340.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_28">
+          <dc:Bounds height="17.0" width="76.0" x="784.0" y="341.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_12" bpmnElement="SequenceFlow_12" sourceElement="BPMNShape_ExclusiveGateway_7" targetElement="BPMNShape_ServiceTask_3">
+        <di:waypoint xsi:type="dc:Point" x="732.0" y="340.0"/>
+        <di:waypoint xsi:type="dc:Point" x="635.0" y="340.0"/>
+        <di:waypoint xsi:type="dc:Point" x="635.0" y="251.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_39"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

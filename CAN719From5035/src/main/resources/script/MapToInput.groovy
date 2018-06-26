@@ -235,7 +235,7 @@ def Message processData(Message message) {
 	for(item in abhList){
 	        eeList += item.personIdExternal+"\n";
 	        JobData eeJob = jobMap.get(item.personIdExternal);
-	        userList += eeJob.toString()+"\n"
+	        userList += eeJob.toString()+"\n";
 	 }
 	 
 	 String eeList1 = pmap.get("PERSON_ID_EXTERNAL_PARAMETER");	
