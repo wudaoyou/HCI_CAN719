@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 SAP-BundleType: IntegrationFlow
 Bundle-ClassPath: .
 SAP-RuntimeProfile: iflmap
-Bundle-Version: 1.4.3
+Bundle-Version: 1.5.0
 SAP-NodeType: IFLMAP
 Bundle-Name: CAN719AutobumpInterface
 Bundle-ManifestVersion: 2
 SAP-ArtifactId: 2d73edd8-5825-433d-8428-1140cd159f75
-Bundle-SymbolicName: CAN719AutobumpInterface; singleton:=true
+Bundle-SymbolicName: CAN719AutobumpInterface_new;singleton:=true
 Import-Package:  com.sap.esb.camel.http.ahc.configurer;version="[1,2)"
  , com.sap.gateway.core.ip.component.odata4.api, com.sap.it.rt.adapter
  .odata.response, com.sap.it.rt.adapter.sfsf.component, com.sap.it.rt.
