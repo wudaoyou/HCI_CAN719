@@ -396,6 +396,10 @@ def Message processData(Message message) {
 	
 	message.setProperty("EE_COUNT", eeCount);
 	
+	message.setProperty("EE_PROCESSED", 0);
+	
+	message.setProperty("EE_LIST", pernrList);
+	
 	message.setBody("<EmpJob>" + "dummy" + "</EmpJob>");
 	
 	return message;
