@@ -11,6 +11,12 @@ def Message processData(Message message) {
 	String payload = "";
 	def count = pmap.get("EE_PROCESSED") as Integer;
 	List eeList = pmap.get("EE_LIST");
+	
+	//debugging
+	def messageLog = messageLogFactory.getMessageLog(message);
+	messageLog.setStringProperty("pernrlist in batch script: ", eeList.toString());
+	
+	
     String currentPernr = "";
     
 	if(eeList.size>0){
@@ -19,7 +25,7 @@ def Message processData(Message message) {
         HashMap xmlMap = pmap.get("XML_LIST");
         item  = xmlMap.get(currentPernr);
         
-        payload += "<batchChangeSetPart><method>UPSERT</method><EmpJob>" + item.jobXML + "</EmpJob></batchChangeSetPart>";
+        payload = "<batchChangeSetPart><method>UPSERT</method><EmpJob>" + item.jobXML + "</EmpJob></batchChangeSetPart>";
 
         payload += "<batchChangeSetPart><method>UPSERT</method><EmpCompensation>" + item.compXML + "</EmpCompensation></batchChangeSetPart>";
 
@@ -41,7 +47,6 @@ def Message processData(Message message) {
 	
 	if(enableLogging != null && enableLogging.toUpperCase().equals("TRUE")){
 		
-		def messageLog = messageLogFactory.getMessageLog(message);
 		if(messageLog != null){
 			messageLog.addAttachmentAsString(count+" batch upsert ", payload, "text/xml");
 		}

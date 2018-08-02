@@ -398,7 +398,7 @@ def Message processData(Message message) {
 	
 	message.setProperty("EE_PROCESSED", 0);
 	
-	message.setProperty("EE_LIST", pernrList);
+	message.setProperty("EE_LIST", inputPernrList);
 	
 	message.setBody("<EmpJob>" + "dummy" + "</EmpJob>");
 	

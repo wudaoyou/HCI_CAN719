@@ -24,7 +24,7 @@ def pmap = message.getProperties();
                       
            }
         }  
-		message.setProperty("EE_COUNT",eeCount-errorList.size());
+		//message.setProperty("EE_COUNT",eeCount-errorList.size());
 		message.setProperty("NOTIFY_LIST",notifyList);
  }
 
@@ -41,29 +41,24 @@ def messageLog = messageLogFactory.getMessageLog(message);
 	def results = null;
 	List<String> errorList = new ArrayList<String>();
 	
-	if(inXML.indexOf("EmpJobUpsertResponse")>=0){
-	    results = body.EmpJobUpsertResponse;
-	}else if (inXML.indexOf("EmpPayCompRecurringUpsertResponse")>=0){
-	          results = body.EmpPayCompRecurringUpsertResponse;
-	}else if (inXML.indexOf("EmpCompensationUpsertResponse")>=0){
-	          results = body.EmpCompensationUpsertResponse;
-	 }
-
-  	if(results != null){
-  	    results.each{
-         def status = it.status
-         messageLog.setStringProperty("message : ", it.message.toString());
-         if(it.status.equals("ERROR")){
-               errorList.add(it.message.toString());
-         }  
-    }
-                 
-  }
+	if(inXML.indexOf("batchChangeSetPartResponse")>=0){
+	    results = body.batchChangeSetResponse.batchChangeSetPartResponse.body;
+	}
+	
+//  	if(results != null){
+//  	    results.each{
+//         def status = it.status
+//         messageLog.setStringProperty("message : ", it.message.toString());
+//         if(it.status.equals("ERROR")){
+//               errorList.add(it.message.toString());
+//         }  
+//    }             
+//  }
 	
 	if(enableLogging != null && enableLogging.toUpperCase().equals("TRUE")){
 		
 		if(messageLog != null){
-			messageLog.addAttachmentAsString("EC update result ", inXML, "text/xml");
+			messageLog.addAttachmentAsString("EC update result ", results.toString(), "text/xml");
 		}
 	}
 	
