@@ -2,6 +2,8 @@ import com.sap.gateway.ip.core.customdev.util.Message;
 import java.util.*;
 import groovy.xml.*;
 
+
+
 def Message processData(Message message) {
 
 	def pmap = message.getProperties();
@@ -12,13 +14,13 @@ def Message processData(Message message) {
 	def count = pmap.get("EE_PROCESSED") as Integer;
 	List eeList = pmap.get("EE_LIST");
 	
+	
 	//debugging
 	def messageLog = messageLogFactory.getMessageLog(message);
 	messageLog.setStringProperty("pernrlist in batch script: ", eeList.toString());
 	
 	
     String currentPernr = "";
-    
 	if(eeList.size>0){
         currentPernr = eeList.remove(0);
 
@@ -35,15 +37,16 @@ def Message processData(Message message) {
         	payload += "<batchChangeSetPart><method>UPSERT</method><EmpPayCompRecurring>" +item.payRecurPremXML + "</EmpPayCompRecurring></batchChangeSetPart>"
         
         }
-
         
         count++;
-
 	}
-
+	message.setProperty("EE_CURRENT", currentPernr);
+	
     message.setProperty("EE_PROCESSED", count);
 	
 	message.setProperty("EE_LIST", eeList);
+	
+	
 	
 	if(enableLogging != null && enableLogging.toUpperCase().equals("TRUE")){
 		

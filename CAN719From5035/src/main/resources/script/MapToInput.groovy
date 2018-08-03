@@ -49,19 +49,19 @@ public class JobData {
     String payRecurPremXML="";
 }
 
-class NotifyItem {
-    String personnelNumber;
-    String userId;
-	String endDate;
-	String beginDate;
-	String changedOnDate;
-	String sequenceNumber;
-	String status="";
-	String toString(){
-	    return personnelNumber+" "+userId +" "+ endDate+" "+ beginDate+" "+ endDate+" "+ status;
-	}
+ class NotifyItem {
+	    String personnelNumber="";
+	    String userId="";
+		String endDate="";
+		String beginDate="";
+		String changedOnDate="";
+		String sequenceNumber="";
+		String status="";
+		String toString(){
+		    return personnelNumber+" "+userId +" "+ endDate+" "+ beginDate+" "+ endDate+" "+ status;
+		}
 
-}
+	}
 
 class PersonHistory{
 	String pernr;
@@ -259,13 +259,13 @@ def Message processData(Message message) {
 	messageLog.setStringProperty("sequence map: ", sequenceMap.toString());
 	
 	HashMap<String, UpsertXML> XMLMap = new HashMap<String, UpsertXML>();
-	List<NotifyItem> notifyList = new ArrayList<NotifyItem>();
+	List<NotifyItem> notifyList = new ArrayList<>();
 	
 	int eeCount = 0;
 	
 		for( item in abhList){
 			if(inputPernrList.contains(item.personIdExternal)){
-				eeCount++;
+				//eeCount++;
 				UpsertXML uxml;
 				if(XMLMap.containsKey(item.personIdExternal)){
 				    uxml = XMLMap.get(item.personIdExternal);
@@ -384,17 +384,19 @@ def Message processData(Message message) {
 			     notify.sequenceNumber = item.seqNumber;
 			     notify.status = "1";
 			     notifyList.add(notify);
-			     
 			} 
 	 }
 	
+		
+	     
+		
 	message.setProperty("XML_LIST", XMLMap);
 	
 	message.setProperty("JOB_MAP", jobMap);
 	
 	message.setProperty("NOTIFY_LIST",notifyList);
 	
-	message.setProperty("EE_COUNT", eeCount);
+	message.setProperty("EE_COUNT", inputPernrList.size());
 	
 	message.setProperty("EE_PROCESSED", 0);
 	
