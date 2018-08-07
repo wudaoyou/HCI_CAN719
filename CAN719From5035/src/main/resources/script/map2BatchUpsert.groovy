@@ -54,7 +54,7 @@ def Message processData(Message message) {
 			messageLog.addAttachmentAsString(count+" batch upsert ", payload, "text/xml");
 		}
 	}
-	message.setBody(payload);   
+	message.setBody("<batchParts><batchChangeSet>"+payload+"</batchChangeSet></batchParts>");   
 	
 	
 	return message;

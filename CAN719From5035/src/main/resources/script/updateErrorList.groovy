@@ -21,28 +21,24 @@ def messageLog = messageLogFactory.getMessageLog(message);
 	List<String> errorList = new ArrayList<String>();
 	
 	if(inXML.indexOf("batchChangeSetPartResponse")>=0){
-	    results = body.batchChangeSetResponse.batchChangeSetPartResponse.body;
+	    results = body.batchChangeSetResponse.batchChangeSetPartResponse.statusInfo as String;
 	}
 	
-  	if(results != null){
-  	    results.each{
-         def errorStatus = it.error;
-         if(errorStatus!= null){      // error 
-        	 code = errorStatus.code as String;
-        	 msg = errorStatus.message as String;
-        	 for(item in notifyList){
-	             if(item.personnelNumber.equals(currentPernr)){
-	                   item.status = "4";                            
-	               }
-	         }
-         }else{
-        	 for(item in notifyList){
-	             if(item.personnelNumber.equals(currentPernr)){
-	                   item.status = "0";                            
-	               }
-	         }
-         }
-    }             
-  }
+	if(results.indexOf("Error")>=0){
+		for(item in notifyList){
+            if(item.personnelNumber.equals(currentPernr)){
+                  item.status = "4";                            
+              }
+        }
+	}else if(results.indexOf("OK")>=0){
+		for(item in notifyList){
+            if(item.personnelNumber.equals(currentPernr)){
+                  item.status = "0";                            
+              }
+        }
+	}
+	
+	messageLog.setStringProperty("upsert status: ", results);
+
 	return message;
 }
