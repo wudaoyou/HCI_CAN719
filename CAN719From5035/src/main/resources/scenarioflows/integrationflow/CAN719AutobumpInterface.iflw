@@ -55,7 +55,6 @@
     </bpmn2:participant>
     <bpmn2:participant id="_Participant_3" ifl:type="IntegrationProcess" name="Local Update Upsert results" processRef="Process_4"/>
     <bpmn2:participant id="_Participant_4" ifl:type="IntegrationProcess" name="Updating Staging" processRef="Process_5"/>
-    <bpmn2:participant id="_Participant_6" ifl:type="IntegrationProcess" name="Local Update Successful" processRef="Process_6"/>
     <bpmn2:participant id="_Participant_8" ifl:type="IntegrationProcess" name="batch upsert to EC" processRef="Process_7"/>
     <bpmn2:participant id="Participant_4" ifl:type="EndpointRecevier" name="Receiver"/>
     <bpmn2:participant id="Participant_3" ifl:type="EndpointRecevier" name="DP_UPDATE_STATING"/>
@@ -1199,52 +1198,6 @@
     </bpmn2:endEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_28" name="TESTMODE_ON" sourceRef="ExclusiveGateway_3" targetRef="EndEvent_8"/>
   </bpmn2:process>
-  <bpmn2:process id="Process_6" name="Process 6" isExecutable="false">
-    <bpmn2:extensionElements>
-      <ifl:property>
-        <key>componentVersion</key>
-        <value>1.1</value>
-      </ifl:property>
-      <ifl:property>
-        <key>transactionalHandling</key>
-        <value>From Calling Process</value>
-      </ifl:property>
-      <ifl:property>
-        <key>transactionTimeout</key>
-        <value>30</value>
-      </ifl:property>
-      <ifl:property>
-        <key>cmdVariantUri</key>
-        <value>ctype::FlowElementVariant/cname::LocalIntegrationProcess/version::1.1.2</value>
-      </ifl:property>
-      <ifl:property>
-        <key>processType</key>
-        <value>directCall</value>
-      </ifl:property>
-    </bpmn2:extensionElements>
-    <bpmn2:startEvent id="StartEvent_2" name="Start">
-      <bpmn2:outgoing>SequenceFlow_31</bpmn2:outgoing>
-    </bpmn2:startEvent>
-    <bpmn2:endEvent id="EndEvent_7" name="End">
-      <bpmn2:incoming>SequenceFlow_45</bpmn2:incoming>
-    </bpmn2:endEvent>
-    <bpmn2:sequenceFlow id="SequenceFlow_31" sourceRef="StartEvent_2" targetRef="CallActivity_14"/>
-    <bpmn2:callActivity id="CallActivity_14" name="Script">
-      <bpmn2:extensionElements>
-        <ifl:property>
-          <key>activityType</key>
-          <value>Script</value>
-        </ifl:property>
-        <ifl:property>
-          <key>script</key>
-          <value>updateSuccessList.groovy</value>
-        </ifl:property>
-      </bpmn2:extensionElements>
-      <bpmn2:incoming>SequenceFlow_31</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_45</bpmn2:outgoing>
-    </bpmn2:callActivity>
-    <bpmn2:sequenceFlow id="SequenceFlow_45" sourceRef="CallActivity_14" targetRef="EndEvent_7"/>
-  </bpmn2:process>
   <bpmn2:process id="Process_7" name="Process 7" isExecutable="false">
     <bpmn2:extensionElements>
       <ifl:property>
@@ -1384,12 +1337,6 @@
         <dc:Bounds height="370.0" width="691.0" x="1290.0" y="256.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_57">
           <dc:Bounds height="17.0" width="110.0" x="1580.0" y="259.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_Participant_4" bpmnElement="_Participant_6" isHorizontal="false">
-        <dc:Bounds height="220.0" width="540.0" x="700.0" y="1080.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_78">
-          <dc:Bounds height="17.0" width="162.0" x="889.0" y="1083.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_Participant_5" bpmnElement="_Participant_8" isHorizontal="false">
@@ -1546,24 +1493,6 @@
         <dc:Bounds height="60.0" width="100.0" x="1550.0" y="304.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_67">
           <dc:Bounds height="17.0" width="38.0" x="1581.0" y="325.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_StartEvent_2" bpmnElement="StartEvent_2">
-        <dc:Bounds height="36.0" width="36.0" x="722.0" y="1171.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_79">
-          <dc:Bounds height="17.0" width="31.0" x="724.0" y="1207.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_EndEvent_7" bpmnElement="EndEvent_7">
-        <dc:Bounds height="36.0" width="36.0" x="1187.0" y="1171.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_82">
-          <dc:Bounds height="17.0" width="26.0" x="1192.0" y="1207.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_CallActivity_14" bpmnElement="CallActivity_14" isExpanded="true">
-        <dc:Bounds height="60.0" width="100.0" x="940.0" y="1170.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_85">
-          <dc:Bounds height="17.0" width="38.0" x="971.0" y="1191.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_StartEvent_1" bpmnElement="StartEvent_1">
@@ -1810,20 +1739,6 @@
         <di:waypoint xsi:type="dc:Point" x="1678.0" y="334.0"/>
         <di:waypoint xsi:type="dc:Point" x="1678.0" y="399.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_77"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_31" bpmnElement="SequenceFlow_31" sourceElement="BPMNShape_StartEvent_2">
-        <di:waypoint xsi:type="dc:Point" x="758.0" y="1189.0"/>
-        <di:waypoint xsi:type="dc:Point" x="849.0" y="1189.0"/>
-        <di:waypoint xsi:type="dc:Point" x="849.0" y="1200.0"/>
-        <di:waypoint xsi:type="dc:Point" x="940.0" y="1200.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_84"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_45" bpmnElement="SequenceFlow_45" sourceElement="BPMNShape_CallActivity_14" targetElement="BPMNShape_EndEvent_7">
-        <di:waypoint xsi:type="dc:Point" x="1040.0" y="1200.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1113.0" y="1200.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1113.0" y="1189.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1187.0" y="1189.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_86"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_40" bpmnElement="SequenceFlow_40" sourceElement="BPMNShape_StartEvent_1" targetElement="BPMNShape_CallActivity_8">
         <di:waypoint xsi:type="dc:Point" x="778.0" y="910.0"/>
