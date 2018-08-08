@@ -37,7 +37,7 @@
       </ifl:property>
     </bpmn2:extensionElements>
     <bpmn2:participant id="Participant_Process_1" ifl:type="IntegrationProcess" name="Integration Process" processRef="Process_1"/>
-    <bpmn2:participant id="Participant_1" ifl:type="EndpointRecevier" name="DP">
+    <bpmn2:participant id="Participant_1" ifl:type="EndpointRecevier" name="DP_QUERY_STAGING">
       <bpmn2:extensionElements>
         <ifl:property>
           <key>ifl:type</key>
@@ -58,6 +58,7 @@
     <bpmn2:participant id="_Participant_6" ifl:type="IntegrationProcess" name="Local Update Successful" processRef="Process_6"/>
     <bpmn2:participant id="_Participant_8" ifl:type="IntegrationProcess" name="batch upsert to EC" processRef="Process_7"/>
     <bpmn2:participant id="Participant_4" ifl:type="EndpointRecevier" name="Receiver"/>
+    <bpmn2:participant id="Participant_3" ifl:type="EndpointRecevier" name="DP_UPDATE_STATING"/>
     <bpmn2:messageFlow id="MessageFlow_5" name="getEEdata" sourceRef="ServiceTask_3" targetRef="Participant_2">
       <bpmn2:extensionElements>
         <ifl:property>
@@ -342,7 +343,7 @@
         </ifl:property>
       </bpmn2:extensionElements>
     </bpmn2:messageFlow>
-    <bpmn2:messageFlow id="MessageFlow_6" name="setABH" sourceRef="ServiceTask_6" targetRef="Participant_1">
+    <bpmn2:messageFlow id="MessageFlow_6" name="setABH" sourceRef="ServiceTask_6" targetRef="Participant_3">
       <bpmn2:extensionElements>
         <ifl:property>
           <key>Name</key>
@@ -1362,9 +1363,9 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_Participant_1" bpmnElement="Participant_1" isHorizontal="false">
-        <dc:Bounds height="140.0" width="100.0" x="1280.0" y="90.0"/>
+        <dc:Bounds height="140.0" width="100.0" x="1310.0" y="63.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_18">
-          <dc:Bounds height="17.0" width="21.0" x="1319.0" y="93.0"/>
+          <dc:Bounds height="34.0" width="89.0" x="1315.0" y="66.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_Participant_2" bpmnElement="Participant_2" isHorizontal="false">
@@ -1398,9 +1399,15 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_Participant_8" bpmnElement="Participant_4" isHorizontal="false">
-        <dc:Bounds height="140.0" width="100.0" x="2080.0" y="900.0"/>
+        <dc:Bounds height="140.0" width="100.0" x="2040.0" y="724.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_4">
-          <dc:Bounds height="17.0" width="58.0" x="2101.0" y="903.0"/>
+          <dc:Bounds height="17.0" width="58.0" x="2061.0" y="727.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Participant_3" bpmnElement="Participant_3" isHorizontal="false">
+        <dc:Bounds height="140.0" width="100.0" x="2030.0" y="229.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_55">
+          <dc:Bounds height="34.0" width="96.0" x="2032.0" y="232.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_StartEvent_4" bpmnElement="StartEvent_4">
@@ -1690,11 +1697,11 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_1" bpmnElement="MessageFlow_1" sourceElement="BPMNShape_ServiceTask_1" targetElement="BPMNShape_Participant_1">
         <di:waypoint xsi:type="dc:Point" x="1199.0" y="160.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1239.0" y="160.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1239.0" y="144.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1280.0" y="144.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1254.0" y="160.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1254.0" y="117.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1310.0" y="117.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_17">
-          <dc:Bounds height="17.0" width="38.0" x="1221.0" y="153.0"/>
+          <dc:Bounds height="17.0" width="38.0" x="1236.0" y="139.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_5" sourceElement="BPMNShape_CallActivity_5" targetElement="BPMNShape_ServiceTask_1">
@@ -1770,12 +1777,13 @@
         <di:waypoint xsi:type="dc:Point" x="1550.0" y="334.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_75"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_6" bpmnElement="MessageFlow_6" sourceElement="BPMNShape_ServiceTask_6" targetElement="BPMNShape_Participant_1">
+      <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_6" bpmnElement="MessageFlow_6" sourceElement="BPMNShape_ServiceTask_6" targetElement="BPMNShape_Participant_3">
         <di:waypoint xsi:type="dc:Point" x="1906.0" y="505.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1906.0" y="230.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1380.0" y="230.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1906.0" y="437.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2096.0" y="437.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2096.0" y="369.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_93">
-          <dc:Bounds height="17.0" width="38.0" x="1763.0" y="231.0"/>
+          <dc:Bounds height="17.0" width="38.0" x="1983.0" y="438.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_35" bpmnElement="SequenceFlow_35" sourceElement="BPMNShape_ServiceTask_6" targetElement="BPMNShape_CallActivity_24">
@@ -1844,12 +1852,11 @@
         <bpmndi:BPMNLabel id="BPMNLabel_120"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_2" bpmnElement="MessageFlow_2" sourceElement="BPMNShape_ServiceTask_2" targetElement="BPMNShape_Participant_8">
-        <di:waypoint xsi:type="dc:Point" x="1703.0" y="717.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1703.0" y="707.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2080.0" y="707.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2080.0" y="900.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1758.0" y="733.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1899.0" y="733.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2040.0" y="733.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_22">
-          <dc:Bounds height="17.0" width="67.0" x="1950.0" y="708.0"/>
+          <dc:Bounds height="17.0" width="43.0" x="1878.0" y="734.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_10" bpmnElement="SequenceFlow_10" sourceElement="BPMNShape_ServiceTask_2" targetElement="BPMNShape_CallActivity_4">
