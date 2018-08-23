@@ -315,11 +315,20 @@ def Message processData(Message message) {
 			     
 			     //paycomp xml
 			     //userId,startDate,eventReason,endDate
+			     String compKey = item.personIdExternal+"C"+item.startDate;
+			     seqNumber = "";
+			     if(sequenceMap.get(payKey)==null){
+			         seqNumber = "1";
+			     }else{
+			         seqNumber = Integer.parseInt(sequenceMap.get(payKey))+1+"";
+			         
+			     }
 			     payload="";
 			     payload += "<EmpCompensation>";  
 			     payload += "<userId>"+eeJob.user_id+"</userId>";
 			     payload += "<startDate>"+item.startDate+"T00:00:00.000Z"+"</startDate>";
 			     payload += "<eventReason>"+eventReason+"</eventReason>";
+			     payload += "<seqNumber>" + seqNumber + "</seqNumber>";
 			    // payload += "<endDate>"+item.endDate+"</endDate>";
 			     payload += "</EmpCompensation>";  
 			     uxml.compXML += payload;
