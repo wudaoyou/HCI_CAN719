@@ -141,7 +141,7 @@ def Message processData(Message message) {
 		
 		upsertItems.add(item);
 	}
-	 Collections.sort(upsertItems);
+	//Collections.sort(upsertItems);
 	message.setProperty("ABH_LIST", upsertItems);
 	
 

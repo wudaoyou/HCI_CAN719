@@ -113,6 +113,7 @@ class PersonHistory{
                        return reason; 
             }            
   		}
+
 		return reason;
   			
   		}
@@ -286,10 +287,12 @@ def Message processData(Message message) {
 				String eventReason = item.eventReason;
 				if(item.eventReason.equals("OTHER")){
 				    PersonHistory history = historyMap.get(item.personIdExternal);
-				    eventReason = history.getReason(item.startDate,item.endDate)
+				    eventReason = history.getReason(item.startDate,item.endDate);
+				    if(eventReason.equals("HIRNEW")){
+				    	eventReason = "DATACHG";
+				    }
 				}
 
-				
 				
 				 payload=""
 			     payload += "<EmpJob>";  
