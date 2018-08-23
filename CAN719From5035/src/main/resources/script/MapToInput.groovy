@@ -317,10 +317,10 @@ def Message processData(Message message) {
 			     //userId,startDate,eventReason,endDate
 			     String compKey = item.personIdExternal+"C"+item.startDate;
 			     seqNumber = "";
-			     if(sequenceMap.get(payKey)==null){
+			     if(sequenceMap.get(compKey)==null){
 			         seqNumber = "1";
 			     }else{
-			         seqNumber = Integer.parseInt(sequenceMap.get(payKey))+1+"";
+			         seqNumber = Integer.parseInt(sequenceMap.get(compKey))+1+"";
 			         
 			     }
 			     payload="";
