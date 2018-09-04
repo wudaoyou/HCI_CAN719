@@ -75,7 +75,7 @@ def Map<String,String> getReasonFromNumber(){
 	reasonCodeMap.put("07","PCSCLCHG");
 	reasonCodeMap.put("08","PCHRSRES");
 	reasonCodeMap.put("09","PCHRSRET");
-	reasonCodeMap.put("99","OTHER");
+	reasonCodeMap.put("99","PCABCORR");
 	return reasonCodeMap;
  }
 

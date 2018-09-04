@@ -1,11 +1,11 @@
 #Parameter data and values
-#Wed Aug 22 20:47:33 PDT 2018
+#Sun Sep 02 14:57:35 PDT 2018
 COMPANY=0004,0053,0054
 EC_CREDENTIAL_ODATA=CostcoT_Odata
 BATCH_SIZE=200
 DP_ENDPOINT=https\://accessnetad.costco.com/AutoPayIncrease
 COUNTRY=CA
-USER_TEST_EE=5403219
+USER_TEST_EE=
 EC_ENDPOINT_ODATA=https\://api4preview.sapsf.com/odata/v2
 DP_CREDENTIAL_CERT=hci_l5034
 DP_CREDENTIAL=

@@ -189,7 +189,7 @@ def Message processData(Message message) {
 				String seqno = job.seq_number;
 				String empStatus = job.emplStatus;
 				key =pernr+"J"+job.start_date;
-				sequenceMap.put(key,job.seq_number);
+				sequenceMap.put(key,job.seq_number as String);
 				// check the start date and sequence number to make sure get the correct job_information
 				if (end_date.equals("9999-12-31") ) {
 					// job_information found
@@ -205,7 +205,7 @@ def Message processData(Message message) {
 			
 			for (def comp in emp.compensation_information){
 			         key = pernr+"C"+comp.start_date;     
-			         sequenceMap.put(key,comp.seq_number);   
+			         sequenceMap.put(key,comp.seq_number as String);   
 			         PayComp pc = new PayComp();
 			         pc.setStartDate(comp.start_date.toString());
 			         pc.setEndDate(comp.end_date.toString());
@@ -285,12 +285,13 @@ def Message processData(Message message) {
 				
 				// get event Reason
 				String eventReason = item.eventReason;
-				if(item.eventReason.equals("OTHER")){
-				    PersonHistory history = historyMap.get(item.personIdExternal);
-				    eventReason = history.getReason(item.startDate,item.endDate);
-				    if(eventReason.equals("HIRNEW")){
-				    	eventReason = "DATACHG";
-				    }
+				if(item.eventReason.equals("PCABCORR")){
+					//Solution: CAN719 Phase 2.a. map all correction record to EC by using "correction" reason
+					//temporary solution: use "PCRATCHG" for now. need change this after the real correction reason is created.
+					//
+				    //PersonHistory history = historyMap.get(item.personIdExternal);
+				    //eventReason = history.getReason(item.startDate,item.endDate);
+					eventReason = "PCABCORR";
 				}
 
 				
@@ -328,7 +329,10 @@ def Message processData(Message message) {
 			     payload += "<userId>"+eeJob.user_id+"</userId>";
 			     payload += "<startDate>"+item.startDate+"T00:00:00.000Z"+"</startDate>";
 			     payload += "<eventReason>"+eventReason+"</eventReason>";
-			     payload += "<seqNumber>" + seqNumber + "</seqNumber>";
+			     
+			     // Austrilian project turns on the SeqNo for paycomp table. we have enable this line
+			     
+			    // payload += "<seqNumber>" + seqNumber + "</seqNumber>";
 			    // payload += "<endDate>"+item.endDate+"</endDate>";
 			     payload += "</EmpCompensation>";  
 			     uxml.compXML += payload;
@@ -336,6 +340,7 @@ def Message processData(Message message) {
 			     //userId,startDate,seqNumber,paycompvalue,payComponent,endDate
 			     payload="";
 			    
+			     
 			     String payKey = item.personIdExternal+"P"+"1005"+item.startDate;
 			      seqNumber ="";
 			     if(sequenceMap.get(payKey)==null){
@@ -344,9 +349,8 @@ def Message processData(Message message) {
 			         seqNumber = Integer.parseInt(sequenceMap.get(payKey))+1+"";
 			         
 			     }
-
-
-				// seqNumber = (sequenceMap.get(payKey)==null?"1":sequenceMap.get(payKey));
+			     
+				seqNumber = (sequenceMap.get(payKey)==null?"1":sequenceMap.get(payKey));
 				 
 			     
 			     payload += "<EmpPayCompRecurring>";  
