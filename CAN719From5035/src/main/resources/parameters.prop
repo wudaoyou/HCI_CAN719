@@ -1,5 +1,5 @@
 #Parameter data and values
-#Sun Sep 02 14:57:35 PDT 2018
+#Thu Sep 06 10:20:29 PDT 2018
 COMPANY=0004,0053,0054
 EC_CREDENTIAL_ODATA=CostcoT_Odata
 BATCH_SIZE=200
@@ -8,6 +8,7 @@ COUNTRY=CA
 USER_TEST_EE=
 EC_ENDPOINT_ODATA=https\://api4preview.sapsf.com/odata/v2
 DP_CREDENTIAL_CERT=hci_l5034
+DELAY_SECONDS=
 DP_CREDENTIAL=
 TEST_MODE=FALSE
 EC_ENDPOINT=https\://api4preview.sapsf.com

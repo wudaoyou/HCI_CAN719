@@ -188,7 +188,7 @@ def Message processData(Message message) {
 				String end_date = job.end_date;
 				String seqno = job.seq_number;
 				String empStatus = job.emplStatus;
-				key =pernr+"J"+job.start_date;
+				key =pernr+"J"+job.start_date.toString();
 				sequenceMap.put(key,job.seq_number as String);
 				// check the start date and sequence number to make sure get the correct job_information
 				if (end_date.equals("9999-12-31") ) {
@@ -204,7 +204,7 @@ def Message processData(Message message) {
 			}// end of emp.job_information loop
 			
 			for (def comp in emp.compensation_information){
-			         key = pernr+"C"+comp.start_date;     
+			         key = pernr+"C"+comp.start_date.toString();     
 			         sequenceMap.put(key,comp.seq_number as String);   
 			         PayComp pc = new PayComp();
 			         pc.setStartDate(comp.start_date.toString());
@@ -214,7 +214,7 @@ def Message processData(Message message) {
 			         historyMap.put(pernr, ph);         
 			          
 			    for(def pay in emp.compensation_information.paycompensation_recurring){
-             		 key = pernr+"P"+pay.pay_component+pay.start_date;         
+             		 key = pernr+"P"+pay.pay_component.toString()+pay.start_date.toString();         
 			         sequenceMap.put(key,pay.seq_number.toString());
 					 }
 			              
@@ -350,7 +350,6 @@ def Message processData(Message message) {
 			         
 			     }
 			     
-				seqNumber = (sequenceMap.get(payKey)==null?"1":sequenceMap.get(payKey));
 				 
 			     
 			     payload += "<EmpPayCompRecurring>";  
