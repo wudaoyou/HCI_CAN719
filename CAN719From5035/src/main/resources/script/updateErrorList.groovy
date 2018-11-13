@@ -27,13 +27,15 @@ def messageLog = messageLogFactory.getMessageLog(message);
 	if(results.indexOf("Error")>=0){
 		for(item in notifyList){
             if(item.personnelNumber.equals(currentPernr)){
-                  item.status = "4";                            
+                  item.status = "4"; 
+                  item.message = "Error";
               }
         }
 	}else if(results.indexOf("OK")>=0){
 		for(item in notifyList){
             if(item.personnelNumber.equals(currentPernr)){
-                  item.status = "0";                            
+                  item.status = "0";    
+                  item.message = "OK";
               }
         }
 	}

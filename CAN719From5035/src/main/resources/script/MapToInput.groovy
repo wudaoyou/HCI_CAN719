@@ -57,6 +57,8 @@ public class JobData {
 		String changedOnDate="";
 		String sequenceNumber="";
 		String status="";
+		String message="";
+		String comments="";
 		String toString(){
 		    return personnelNumber+" "+userId +" "+ endDate+" "+ beginDate+" "+ endDate+" "+ status;
 		}
@@ -332,7 +334,7 @@ def Message processData(Message message) {
 			     
 			     // Austrilian project turns on the SeqNo for paycomp table. we have enable this line
 			     
-			    // payload += "<seqNumber>" + seqNumber + "</seqNumber>";
+			     payload += "<seqNumber>" + seqNumber + "</seqNumber>";
 			    // payload += "<endDate>"+item.endDate+"</endDate>";
 			     payload += "</EmpCompensation>";  
 			     uxml.compXML += payload;
@@ -398,6 +400,8 @@ def Message processData(Message message) {
 			     notify.changedOnDate = item.changedOnDate;
 			     notify.sequenceNumber = item.seqNumber;
 			     notify.status = "1";
+			     notify.comments = "";
+			     notify.message = "";
 			     notifyList.add(notify);
 			} 
 	 }
